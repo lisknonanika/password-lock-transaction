@@ -15,14 +15,6 @@ class PwdLockSendTransaction extends BaseTransaction {
             params.asset.data.cipherText = ret.cipherText;
             this._password = ret.key;
         }
-        const ajv = new Ajv();
-        const schemaValidate = ajv.compile(sendSchema);
-        const schemaValidateResult = schemaValidate(params.asset);
-        if (!schemaValidateResult) {
-            schemaValidate.errors.forEach(err => {
-                console.log(err.message, err.dataPath);
-            });
-        }
     }
 
     static get TYPE() {
