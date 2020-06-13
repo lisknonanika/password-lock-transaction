@@ -1,0 +1,19 @@
+{
+    "type": {
+        "send": 151,
+        "receive": 152,
+        "cancel": 153
+    },
+    "fee": {
+        "send": "0.05",
+        "receive": "0.05",
+        "cancel": "0.05"
+    },
+    "crypto": {
+        "algorithm": "aes-256-cbc",
+        "pwdLength": 32,
+        "keyLength": 32,
+        "ivLength": 16,
+        "saltLength": 16
+    }
+}

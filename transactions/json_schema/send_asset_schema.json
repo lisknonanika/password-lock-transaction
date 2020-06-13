@@ -1,0 +1,50 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "send_asset_schema.json",
+    "type": "object",
+    "title": "send_asset_schema",
+    "required": [
+        "data"
+    ],
+    "additionalProperties": true,
+    "properties": {
+        "data": {
+            "$id": "#/properties/data",
+            "type": "object",
+            "title": "The data schema",
+            "required": [
+                "senderId",
+                "amount",
+                "cipherText"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "senderId": {
+                    "$id": "#/properties/data/properties/senderId",
+                    "type": "string",
+                    "title": "The senderId schema",
+                    "pattern": "^[0-9]+L$"
+                },
+                "amount": {
+                    "$id": "#/properties/data/properties/amount",
+                    "type": "number",
+                    "title": "The amount schema",
+                    "minimum": 0.1,
+                    "maximum": 1000
+                },
+                "message": {
+                    "$id": "#/properties/data/properties/message",
+                    "type": "string",
+                    "title": "The message schema",
+                    "maxLength": 255
+                },
+                "cipherText": {
+                    "$id": "#/properties/data/properties/cipherText",
+                    "type": "string",
+                    "title": "The cipherText schema",
+                    "minLength": 1
+                }
+            }
+        }
+    }
+}

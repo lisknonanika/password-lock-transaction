@@ -1,0 +1,22 @@
+{
+    "send" : {
+        "data": {
+            "senderId": "",
+            "amount": 0.0,
+            "message": "",
+            "cipherText": ""
+        }
+    },
+    "receive" : {
+        "data": {
+            "targetTransactionId": "",
+            "message": "",
+            "key" : ""
+        }
+    },
+    "cancel" : {
+        "data": {
+            "targetTransactionId": ""
+        }
+    }
+}

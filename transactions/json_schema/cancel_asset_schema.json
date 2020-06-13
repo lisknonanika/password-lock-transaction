@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "cancel_asset_schema.json",
+    "type": "object",
+    "title": "cancel_asset_schema",
+    "required": [
+        "data"
+    ],
+    "additionalProperties": true,
+    "properties": {
+        "data": {
+            "$id": "#/properties/data",
+            "type": "object",
+            "title": "The data schema",
+            "required": [
+                "targetTransactionId"
+            ],
+            "additionalProperties": false,
+            "properties": {
+                "targetTransactionId": {
+                    "$id": "#/properties/data/properties/targetTransactionId",
+                    "type": "string",
+                    "title": "The targetTransactionId schema"
+                }
+            }
+        }
+    }
+}
