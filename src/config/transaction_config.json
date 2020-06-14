@@ -11,7 +11,7 @@
     },
     "crypto": {
         "algorithm": "aes-256-cbc",
-        "pwdLength": 32,
+        "pwdLength": 16,
         "keyLength": 32,
         "ivLength": 16,
         "saltLength": 16

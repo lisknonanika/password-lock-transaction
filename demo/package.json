@@ -1,0 +1,10 @@
+{
+  "name": "password-lock-transaction-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "lisknonanika",
+  "license": "MIT",
+  "dependencies": {
+    "lisk-sdk": "^2.3.8"
+  }
+}

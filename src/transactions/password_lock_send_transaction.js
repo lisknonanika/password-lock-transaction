@@ -1,11 +1,11 @@
 const { BaseTransaction, TransactionError, utils, constants } = require("@liskhq/lisk-transactions");
 const BigNum = require("@liskhq/bignum");
 const Ajv = require("ajv");
-const sendSchema = require("./json_schema/send_asset_schema");
-const trxConfig = require("./config");
-const trxUtils = require("./utils");
+const sendSchema = require("../json_schema/send_asset_schema");
+const trxConfig = require("../config");
+const trxUtils = require("../utils");
 
-class PwdLockSendTransaction extends BaseTransaction {
+class PasswordLockSendTransaction extends BaseTransaction {
 
     constructor(params) {
         super(params)
@@ -13,7 +13,7 @@ class PwdLockSendTransaction extends BaseTransaction {
             // set cipherText & password
             const ret = trxUtils.cipher(params.asset.data);
             params.asset.data.cipherText = ret.cipherText;
-            this._password = ret.key;
+            this._password = ret.password;
         }
     }
 
@@ -61,12 +61,6 @@ class PwdLockSendTransaction extends BaseTransaction {
                 if (+this.asset.data.amount !== +utils.convertBeddowsToLSK(this.amount.toString())) {
                     errors.push(new TransactionError("should match 'amount'", this.id, ".data.amount"));
                 }
-    
-                // data.amount after the decimal point > 2 ?
-                const vals = this.asset.data.amount.toString().split(".");
-                if (vals.length > 1 && vals[1].length > 2) {
-                    errors.push(new TransactionError("should be 2 or less digits after the decimal point", this.id, ".data.amount"));
-                }
             }
         }
         if (!utils.validateTransferAmount(this.amount.toString())) {
@@ -106,4 +100,4 @@ class PwdLockSendTransaction extends BaseTransaction {
     }
 }
 
-module.exports = PwdLockSendTransaction;
+module.exports = PasswordLockSendTransaction;
