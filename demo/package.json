@@ -5,6 +5,7 @@
   "author": "lisknonanika",
   "license": "MIT",
   "dependencies": {
-    "lisk-sdk": "^2.3.8"
+    "lisk-sdk": "^2.3.8",
+    "request": "^2.88.2"
   }
 }

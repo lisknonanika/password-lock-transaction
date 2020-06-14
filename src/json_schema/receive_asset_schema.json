@@ -14,7 +14,7 @@
             "title": "The data schema",
             "required": [
                 "targetTransactionId",
-                "key"
+                "password"
             ],
             "additionalProperties": false,
             "properties": {
@@ -28,10 +28,10 @@
                     "type": "string",
                     "title": "The message schema"
                 },
-                "key": {
-                    "$id": "#/properties/data/properties/key",
+                "password": {
+                    "$id": "#/properties/data/properties/password",
                     "type": "string",
-                    "title": "The key schema"
+                    "title": "The password schema"
                 }
             }
         }

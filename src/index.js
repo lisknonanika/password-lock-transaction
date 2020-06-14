@@ -1,7 +1,11 @@
-const PasswordLockTransactions = require("./transactions");
 const PasswordLockTransactionsConfig = require("./config");
+const { PasswordLockSendTransaction,
+        PasswordLockReceiveTransaction,
+        PasswordLockCancelTransaction } = require("./transactions");
 
 module.exports = {
-    PasswordLockTransactions,
-    PasswordLockTransactionsConfig
+    PasswordLockTransactionsConfig,
+    PasswordLockSendTransaction,
+    PasswordLockReceiveTransaction,
+    PasswordLockCancelTransaction
 }

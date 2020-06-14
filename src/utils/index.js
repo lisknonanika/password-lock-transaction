@@ -1,9 +1,11 @@
 const crypto = require("crypto");
 const conf = require("../config");
 
-const getPassword = () => {
-    const password = crypto.randomBytes(conf.crypto.pwdLength).toString("base64");
-    return password;
+const getPassword = (json) => {
+    const sha512 = crypto.createHash('sha512');
+    sha512.update(JSON.stringify(json.asset.data) + json.timestamp);
+    const hash = sha512.digest('hex');
+    return hash.slice(0, conf.crypto.pwdLength);
 }
 
 const getKeys = (password) => {
@@ -21,12 +23,12 @@ const getKeys = (password) => {
 
 module.exports.cipher = (json) => {
     try {
-        const password = getPassword();
+        const password = getPassword(json);
         const keys = getKeys(password);
         const cipher = crypto.createCipheriv(conf.crypto.algorithm, keys.key, keys.iv);
-        const cipherText = Buffer.concat([cipher.update(JSON.stringify(json)), cipher.final()]);
+        const cipherText = Buffer.concat([cipher.update(JSON.stringify(json.asset.data)), cipher.final()]);
         return {
-            "cipherText": cipherText.toString("base64"),
+            "cipherText": cipherText.toString("hex"),
             "password": password
         }
     } catch (err) {
@@ -38,7 +40,7 @@ module.exports.decipher = (cipherText, password) => {
     try {
         const keys = getKeys(password);
         const decipher = crypto.createDecipheriv(conf.crypto.algorithm, keys.key, keys.iv);
-        const decipherText = Buffer.concat([decipher.update(Buffer.from(cipherText, "base64")), decipher.final()]);
+        const decipherText = Buffer.concat([decipher.update(Buffer.from(cipherText, "hex")), decipher.final()]);
     
         return {
             "decipherText": decipherText.toString("utf8")

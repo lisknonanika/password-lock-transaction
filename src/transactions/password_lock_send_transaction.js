@@ -11,8 +11,8 @@ class PasswordLockSendTransaction extends BaseTransaction {
         super(params)
         if (params && params.asset && params.asset.data) {
             // set cipherText & password
-            const ret = trxUtils.cipher(params.asset.data);
-            params.asset.data.cipherText = ret.cipherText;
+            const ret = trxUtils.cipher(params);
+            this.asset.cipherText = ret.cipherText;
             this._password = ret.password;
         }
     }
@@ -37,43 +37,45 @@ class PasswordLockSendTransaction extends BaseTransaction {
         ]);
     }
 
+    assetToBytes() {
+        const { data } = this.asset;
+        return data ? Buffer.from(JSON.stringify(data), "utf8") : Buffer.alloc(0);
+    }
+
     validateAsset() {
         const errors = [];
 
-        // valid asset.data ?
         const ajv = new Ajv();
         const schemaValidate = ajv.compile(sendSchema);
         const schemaValidateResult = schemaValidate(this.asset);
         if (!schemaValidateResult) {
             schemaValidate.errors.forEach(err => {
-                errors.push(new TransactionError(err.message, this.id, err.dataPath));
+                errors.push(new TransactionError(err.message, this.id, `.asset${err.dataPath}`));
             });
         }
 
-        if (this.asset.data) {
-            // senderId = data.senderId ?
-            if (this.asset.data.senderId && this.senderId !== this.asset.data.senderId) {
-                errors.push(new TransactionError("should match 'senderId'", this.id, ".data.senderId"));
-            }
+        if (this.senderId !== this.asset.data.senderId) {
+            errors.push(new TransactionError("should match 'senderId'", this.id, ".data.senderId"));
+        }
 
-            if (this.asset.data.amount) {
-                // amount = data.amount ?
-                if (+this.asset.data.amount !== +utils.convertBeddowsToLSK(this.amount.toString())) {
-                    errors.push(new TransactionError("should match 'amount'", this.id, ".data.amount"));
-                }
+        if (this.asset.data.amount) {
+            if (+this.asset.data.amount !== +utils.convertBeddowsToLSK(this.amount.toString())) {
+                errors.push(new TransactionError("should match 'amount'", this.id, ".data.amount"));
             }
         }
+
         if (!utils.validateTransferAmount(this.amount.toString())) {
-            errors.push(new TransactionError('Amount must be a valid number in string format.', this.id, '.amount', this.amount.toString()));
+            errors.push(new TransactionError("Amount must be a valid number in string format.", this.id, ".amount", this.amount.toString()));
         }
 
         if (this.recipientId) {
-            errors.push(new TransactionError('Invalid parameter', this.id, '.recipientId'));
+            errors.push(new TransactionError("Invalid parameter", this.id, ".recipientId"));
         }
         
         if (this.recipientPublicKey) {
-            errors.push(new TransactionError('Invalid parameter', this.id, '.recipientPublicKey'));
+            errors.push(new TransactionError("Invalid parameter", this.id, ".recipientPublicKey"));
         }
+        return errors;
     }
 
     applyAsset(store) {
@@ -84,7 +86,7 @@ class PasswordLockSendTransaction extends BaseTransaction {
             errors.push(balanceError);
         }
         const afterBalance = new BigNum(sender.balance).sub(this.amount);
-        store.account.set(updatedSender.address, {...sender, balance: afterBalance.toString()});
+        store.account.set(sender.address, {...sender, balance: afterBalance.toString()});
         return errors;
     }
 
@@ -93,9 +95,9 @@ class PasswordLockSendTransaction extends BaseTransaction {
         const sender = store.account.get(this.senderId);
         const afterBalance = new BigNum(sender.balance).add(this.amount);
         if (afterBalance.gt(constants.MAX_TRANSACTION_AMOUNT)) {
-            errors.push(new TransactionError('Invalid amount', this.id, '.amount', this.amount.toString()));
+            errors.push(new TransactionError("Invalid amount", this.id, ".amount", this.amount.toString()));
         }
-        store.account.set(updatedSender.address, {...sender, balance: afterBalance.toString()});
+        store.account.set(sender.address, {...sender, balance: afterBalance.toString()});
         return errors;
     }
 }

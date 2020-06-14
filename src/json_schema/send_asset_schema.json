@@ -4,7 +4,8 @@
     "type": "object",
     "title": "send_asset_schema",
     "required": [
-        "data"
+        "data",
+        "cipherText"
     ],
     "additionalProperties": true,
     "properties": {
@@ -14,8 +15,7 @@
             "title": "The data schema",
             "required": [
                 "senderId",
-                "amount",
-                "cipherText"
+                "amount"
             ],
             "additionalProperties": false,
             "properties": {
@@ -37,14 +37,14 @@
                     "type": "string",
                     "title": "The message schema",
                     "maxLength": 255
-                },
-                "cipherText": {
-                    "$id": "#/properties/data/properties/cipherText",
-                    "type": "string",
-                    "title": "The cipherText schema",
-                    "minLength": 1
                 }
             }
+        },
+        "cipherText": {
+            "$id": "#/properties/cipherText",
+            "type": "string",
+            "title": "The cipherText schema",
+            "minLength": 1
         }
     }
 }
