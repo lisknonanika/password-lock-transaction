@@ -1,4 +1,5 @@
-const { Application, genesisBlockDevnet, configDevnet } = require("lisk-sdk");
+const { Application } = require("lisk-sdk");
+const { genesisBlockDevnet, configDevnet } = require("./config");
 const { PasswordLockTransactions, PasswordLockTransactionsConfig } = require("../src");
 const { PasswordLockSendTransaction } = PasswordLockTransactions;
 
