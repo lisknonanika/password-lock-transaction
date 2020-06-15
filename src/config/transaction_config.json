@@ -11,9 +11,11 @@
     },
     "crypto": {
         "algorithm": "aes-256-cbc",
-        "pwdLength": 16,
+        "pwdLength": 18,
         "keyLength": 32,
         "ivLength": 16,
-        "saltLength": 16
+        "saltLength": 16,
+        "includePlainData": true,
+        "usePasswordStrings": "23456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ+-=_&*?@"
     }
 }

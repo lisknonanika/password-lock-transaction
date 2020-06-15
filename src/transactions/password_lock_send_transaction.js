@@ -9,11 +9,12 @@ class PasswordLockSendTransaction extends BaseTransaction {
 
     constructor(params) {
         super(params)
-        if (params && params.asset && params.asset.data) {
+        if (params && params.asset && params.asset.data && !params.asset.cipherText) {
             // set cipherText & password
-            const ret = trxUtils.cipher(params);
-            this.asset.cipherText = ret.cipherText;
+            const ret = trxUtils.cipher(params.asset.data);
+            params.asset.cipherText = ret.cipherText;
             this._password = ret.password;
+            if (!trxConfig.crypto.includePlainData) delete params.asset.data;
         }
     }
 
@@ -38,14 +39,18 @@ class PasswordLockSendTransaction extends BaseTransaction {
     }
 
     assetToBytes() {
-        const { data } = this.asset;
-        return data ? Buffer.from(JSON.stringify(data), "utf8") : Buffer.alloc(0);
+        if (trxConfig.crypto.includePlainData) {
+            const { data } = this.asset;
+            return data ? Buffer.from(JSON.stringify(data), "utf8") : Buffer.alloc(0);
+        }
+        return Buffer.alloc(0);
     }
 
     validateAsset() {
         const errors = [];
 
         const ajv = new Ajv();
+        if (!trxConfig.crypto.includePlainData) sendSchema.required = ["cipherText"];
         const schemaValidate = ajv.compile(sendSchema);
         const schemaValidateResult = schemaValidate(this.asset);
         if (!schemaValidateResult) {
@@ -54,11 +59,11 @@ class PasswordLockSendTransaction extends BaseTransaction {
             });
         }
 
-        if (this.senderId !== this.asset.data.senderId) {
-            errors.push(new TransactionError("should match 'senderId'", this.id, ".data.senderId"));
-        }
+        if (trxConfig.crypto.includePlainData) {
+            if (this.senderId !== this.asset.data.senderId) {
+                errors.push(new TransactionError("should match 'senderId'", this.id, ".data.senderId"));
+            }
 
-        if (this.asset.data.amount) {
             if (+this.asset.data.amount !== +utils.convertBeddowsToLSK(this.amount.toString())) {
                 errors.push(new TransactionError("should match 'amount'", this.id, ".data.amount"));
             }

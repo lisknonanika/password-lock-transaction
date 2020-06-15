@@ -15,16 +15,17 @@ const sendDemo = () => {
     const param = {
         asset: {
           data: {
-            senderId: "8273455169423958419L",
+            senderId: "16313739661670634666L",
             amount: 0.5
           }
         },
+        fee: PasswordLockSendTransaction.FEE,
         amount: "50000000",
         timestamp: getTimestamp()
     }
     
     const tx = new PasswordLockSendTransaction(param);
-    tx.sign("robust swift grocery peasant forget share enable convince deputy road keep cheap");
+    tx.sign("wagon stock borrow episode laundry kitten salute link globe zero feed marble");
     console.log(`id: ${tx.id}`)
     console.log(`password: ${tx.password}`)
     console.log(`cipherText: ${tx.asset.cipherText}`)
@@ -48,11 +49,12 @@ const receiveDemo = () => {
   const param = {
       asset: {
         data: {
-          targetTransactionId: "5681330234037859848",
-          password: "66288a833e058aa4",
+          targetTransactionId: "6257980881051108330",
+          password: "P7F3NKjct=3wEyT*QU",
         }
       },
-      recipientId: "8273455169423958419L",
+      fee: PasswordLockReceiveTransaction.FEE,
+      recipientId: "16313739661670634666L",
       timestamp: getTimestamp()
   }
   
@@ -78,14 +80,15 @@ const cancelDemo = () => {
   const param = {
       asset: {
         data: {
-          targetTransactionId: "9805611612205495706"
+          targetTransactionId: "5612724046109811688"
         }
       },
+      fee: PasswordLockCancelTransaction.FEE,
       timestamp: getTimestamp()
   }
   
   const tx = new PasswordLockCancelTransaction(param);
-  tx.sign("robust swift grocery peasant forget share enable convince deputy road keep cheap");
+  tx.sign("wagon stock borrow episode laundry kitten salute link globe zero feed marble");
   
   const options = {
     uri: "http://localhost:4000/api/transactions",
@@ -102,6 +105,6 @@ const cancelDemo = () => {
   });
 }
 
-// sendDemo();
+sendDemo();
 // receiveDemo();
 // cancelDemo();

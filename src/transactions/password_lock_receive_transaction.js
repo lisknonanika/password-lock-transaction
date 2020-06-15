@@ -122,9 +122,15 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
                 return errors;
             }
 
-            if (decipherJson.senderId !== sendTx.asset.data.senderId ||
-                decipherJson.senderId !== sendTx.senderId ||
-                decipherJson.amount !== sendTx.asset.data.amount ||
+            if (trxConfig.crypto.includePlainData) {
+                if (decipherJson.senderId !== sendTx.asset.data.senderId ||
+                    decipherJson.amount !== sendTx.asset.data.amount) {
+                    errors.push(new TransactionError("Invalid Target Transaction", this.id));
+                    return errors;
+                }
+            }
+
+            if (decipherJson.senderId !== sendTx.senderId ||
                 +decipherJson.amount !== +utils.convertBeddowsToLSK(sendTx.amount.toString())) {
                 errors.push(new TransactionError("Invalid Target Transaction", this.id));
                 return errors;
@@ -132,11 +138,6 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
         }
 
         const sender = store.account.getOrDefault(this.senderId);
-        const balanceError = utils.verifyAmountBalance(this.id, sender, sendTx.amount, this.fee);
-        if (balanceError) {
-            errors.push(balanceError);
-            return errors;
-        }
         const afterBalance = new BigNum(sender.balance).add(sendTx.amount);
         if (afterBalance.gt(constants.MAX_TRANSACTION_AMOUNT)) {
             errors.push(new TransactionError("Invalid amount", this.id, ".amount", sendTx.amount.toString()));

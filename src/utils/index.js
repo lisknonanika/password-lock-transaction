@@ -1,11 +1,10 @@
 const crypto = require("crypto");
 const conf = require("../config");
 
-const getPassword = (json) => {
-    const sha512 = crypto.createHash('sha512');
-    sha512.update(JSON.stringify(json.asset.data) + json.timestamp);
-    const hash = sha512.digest('hex');
-    return hash.slice(0, conf.crypto.pwdLength);
+const getPassword = () => {
+    const pwdStrs = conf.crypto.usePasswordStrings;
+    const unit32ary = crypto.randomFillSync(new Uint32Array(conf.crypto.pwdLength));
+    return Array.from(unit32ary).map(n => pwdStrs[n % pwdStrs.length]).join('');
 }
 
 const getKeys = (password) => {
@@ -23,10 +22,10 @@ const getKeys = (password) => {
 
 module.exports.cipher = (json) => {
     try {
-        const password = getPassword(json);
+        const password = getPassword();
         const keys = getKeys(password);
         const cipher = crypto.createCipheriv(conf.crypto.algorithm, keys.key, keys.iv);
-        const cipherText = Buffer.concat([cipher.update(JSON.stringify(json.asset.data)), cipher.final()]);
+        const cipherText = Buffer.concat([cipher.update(JSON.stringify(json)), cipher.final()]);
         return {
             "cipherText": cipherText.toString("hex"),
             "password": password
