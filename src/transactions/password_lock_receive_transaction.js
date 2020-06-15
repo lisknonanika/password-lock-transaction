@@ -13,7 +13,7 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
     }
 
     static get FEE() {
-        return `${utils.convertLSKToBeddows(trxConfig.fee.receive)}`;
+        return "0";
     }
 
     async prepare(store) {
@@ -138,7 +138,12 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
         }
 
         const sender = store.account.getOrDefault(this.senderId);
-        const afterBalance = new BigNum(sender.balance).add(sendTx.amount);
+        const amount = new BigNum(sendTx.amount).sub(utils.convertLSKToBeddows(trxConfig.fee.receive));
+        if (amount <= 0) {
+            errors.push(new TransactionError("Amount must be higher than the receive fee.", this.id));
+            return errors;
+        }
+        const afterBalance = new BigNum(sender.balance).add(amount);
         if (afterBalance.gt(constants.MAX_TRANSACTION_AMOUNT)) {
             errors.push(new TransactionError("Invalid amount", this.id, ".amount", sendTx.amount.toString()));
             return errors;
@@ -150,7 +155,9 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
     undoAsset(store) {
         const errors = [];
         const sender = store.account.getOrDefault(this.senderId);
-        const afterBalance = new BigNum(sender.balance).sub(sendTx.amount);
+        const amount = new BigNum(sendTx.amount).sub(utils.convertLSKToBeddows(trxConfig.fee.receive));
+        if (amount < 0) amount = 0;
+        const afterBalance = new BigNum(sender.balance).sub(amount);
         if (afterBalance < 0) afterBalance = 0;
         store.account.set(sender.address, {...sender, balance: afterBalance.toString()});
         return errors;

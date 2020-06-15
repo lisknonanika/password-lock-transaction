@@ -6,8 +6,8 @@
     },
     "fee": {
         "send": "0.05",
-        "receive": "0",
-        "cancel": "0"
+        "receive": "0.01",
+        "cancel": "0.01"
     },
     "crypto": {
         "algorithm": "aes-256-cbc",

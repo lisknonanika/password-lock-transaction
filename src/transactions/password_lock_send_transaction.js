@@ -73,6 +73,10 @@ class PasswordLockSendTransaction extends BaseTransaction {
             errors.push(new TransactionError("Amount must be a valid number in string format.", this.id, ".amount", this.amount.toString()));
         }
 
+        if (+utils.convertBeddowsToLSK(this.amount.toString()) <= +trxConfig.fee.receive) {
+            errors.push(new TransactionError("Amount must be higher than the receive fee.", this.id, ".amount", this.amount.toString()));
+        }
+
         if (this.recipientId) {
             errors.push(new TransactionError("Invalid parameter", this.id, ".recipientId"));
         }
