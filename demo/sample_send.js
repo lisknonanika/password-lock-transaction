@@ -1,6 +1,6 @@
 const request = require('request');
 const { configDevnet } = require("./config");
-const { PasswordLockSendTransaction } = require("../src")
+const { PasswordLockSendTransaction } = require("password-lock-transaction");
 
 const getTimestamp = () => {
     let now = new Date();

@@ -6,6 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "lisk-sdk": "^2.3.8",
+    "password-lock-transaction": "file:../src",
     "request": "^2.88.2"
   }
 }
