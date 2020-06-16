@@ -122,7 +122,7 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
                 return errors;
             }
 
-            if (trxConfig.crypto.includePlainData) {
+            if (trxConfig.crypto.includePlainData && sendTx.asset.data) {
                 if (decipherJson.senderId !== sendTx.asset.data.senderId ||
                     decipherJson.amount !== sendTx.asset.data.amount) {
                     errors.push(new TransactionError("Invalid Target Transaction", this.id));
