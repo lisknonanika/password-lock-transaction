@@ -1,5 +1,5 @@
-const request = require('request');
-const { configDevnet } = require("./config");
+const axios = require('axios');
+const { configDevnet } = require("../config");
 const { PasswordLockCancelTransaction } = require("password-lock-transaction");
 
 const getTimestamp = () => {
@@ -12,7 +12,7 @@ const getTimestamp = () => {
 const param = {
     asset: {
       data: {
-        targetTransactionId: "5612724046109811688"
+        targetTransactionId: "10392999613536451382"
       }
     },
     fee: PasswordLockCancelTransaction.FEE,
@@ -22,16 +22,11 @@ const param = {
 const tx = new PasswordLockCancelTransaction(param);
 tx.sign("robust swift grocery peasant forget share enable convince deputy road keep cheap");
 
-const options = {
-  uri: "http://localhost:4000/api/transactions",
-  headers: { "Content-type": "application/json" },
-  json: tx
-};
-
-request.post(options, function(err, res, body) {
-  if (err) {
-    console.log('Error: ' + err.message);
-    return;
+(async () => {
+  try {
+    const res = await axios.post('http://localhost:4000/api/transactions', tx);
+    console.log(res.data);
+  } catch (err) {
+    console.log(err.response.data);
   }
-  console.log(body);
-});
+})();

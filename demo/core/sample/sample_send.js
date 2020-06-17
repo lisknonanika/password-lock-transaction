@@ -1,5 +1,5 @@
-const request = require('request');
-const { configDevnet } = require("./config");
+const axios = require('axios');
+const { configDevnet } = require("../config");
 const { PasswordLockSendTransaction } = require("password-lock-transaction");
 
 const getTimestamp = () => {
@@ -23,20 +23,15 @@ const param = {
 
 const tx = new PasswordLockSendTransaction(param);
 tx.sign("robust swift grocery peasant forget share enable convince deputy road keep cheap");
-console.log(`id: ${tx.id}`)
-console.log(`password: ${tx.password}`)
-console.log(`cipherText: ${tx.asset.cipherText}`)
+console.log(`id: ${tx.id}`);
+console.log(`password: ${tx.password}`);
+console.log(`cipherText: ${tx.asset.cipherText}`);
 
-const options = {
-  uri: "http://localhost:4000/api/transactions",
-  headers: { "Content-type": "application/json" },
-  json: tx
-};
-
-request.post(options, function(err, res, body) {
-  if (err) {
-    console.log('Error: ' + err.message);
-    return;
+(async () => {
+  try {
+    const res = await axios.post('http://localhost:4000/api/transactions', tx);
+    console.log(res.data);
+  } catch (err) {
+    console.log(err.response.data);
   }
-  console.log(body);
-});
+})();
