@@ -1,0 +1,46 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.App-content {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border-top: solid 1px #9e9e9e;
+}
+
+.App-title {
+  font-family: 'Gilroy ExtraBold', sans-serif;
+  font-size: calc(10px + 3vmin);
+  font-weight: bold;
+}
+
+.App-description {
+  font-size: calc(10px + 1vmin);
+  font-weight: normal;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
