@@ -39,7 +39,6 @@ class App extends React.Component {
                         </Suspense>
                     </BrowserRouter>
                 </main>
-                <div class="App-content">aaaS</div>
             </div>
         );
     }
