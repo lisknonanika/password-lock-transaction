@@ -1,0 +1,38 @@
+.card {
+  border-radius: 5px;
+  border: 1px solid #999;
+  width: 200px;
+  height: 200px;
+  margin: 30px;
+  box-shadow: 0 2px 10px #999;
+}
+
+.card-title {
+  font-family: 'Gilroy ExtraBold', sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 20px;
+}
+
+.card-content {
+  font-size: 15px;
+  padding: 0 10px;
+}
+  
+@media screen and (min-width:800px) {
+  .card-area {
+    display: flex;
+  }
+  .card {
+    display: inline-block;
+  }
+}
+
+@media screen and (max-width:800px) {
+  .card-area {
+    display: block;
+  }
+  .card {
+    display: block;
+  }
+}

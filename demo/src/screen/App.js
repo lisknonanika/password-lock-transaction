@@ -9,8 +9,7 @@ class App extends React.Component {
         return (
             <div className="App">
                 <header className="App-header">
-                    <div class="App-title">Password Lock Transaction</div>
-                    <div class="description">is PoC built using the Lisk SDK</div>
+                    <div className="App-title">Password Lock Transaction</div>
                 </header>
                 <main className="App-content">
                     <BrowserRouter>
