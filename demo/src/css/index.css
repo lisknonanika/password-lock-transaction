@@ -15,6 +15,10 @@ code {
     monospace;
 }
 
+a {
+  color: #61dafb;
+}
+
 input {
   font-size: 18px;
   padding: 5px;
