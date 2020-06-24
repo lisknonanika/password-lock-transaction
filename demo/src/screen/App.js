@@ -7,9 +7,9 @@ import '../css/App.css';
 class App extends React.Component {
     render() {
         return (
-            <div className="App">
+            <div>
                 <header className="App-header">
-                    <div className="App-title">Password Lock Transaction</div>
+                    <div className="App-title">PLT Demo</div>
                 </header>
                 <main className="App-content">
                     <BrowserRouter>
