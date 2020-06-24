@@ -13,7 +13,6 @@ class Top extends React.Component {
                     <div>The LSK obtained here can only be used in this project.</div>
                     <div>
                         <a href="" target="_blank" className="note-link">What is Lisk ?</a>
-                        <a href="" target="_blank" className="note-link">What is Lisk SDK ?</a>
                     </div>
                 </div>
                 <div className="card-area">
