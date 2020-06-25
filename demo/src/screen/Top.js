@@ -6,6 +6,10 @@ import {PasswordLockTransactionsConfig} from 'password-lock-transaction';
 
 class Top extends React.Component {
 
+    createAccount = () => {
+        this.props.history.push('/new-account');
+    }
+
     render() {
         return (
             <div className="top-content">
@@ -56,11 +60,11 @@ class Top extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="card new-account-card">
+                <div className="card new-account-card" onClick={this.createAccount}>
                     <div>
-                        <div className="card-title">- New Account -</div>
+                        <div className="card-title">- Create Account -</div>
                         <div className="card-content">
-                            PLT is Not available if you do not have a Lisk account.
+                            To use PLT, you need a Lisk account.
                             <br />
                             Are you create the new Lisk account?
                         </div>
