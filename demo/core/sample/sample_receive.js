@@ -1,5 +1,6 @@
 const axios = require('axios');
-const { configDevnet } = require("../config");
+const { configDevnet, genesisBlockDevnet } = require("../config");
+const { getNetworkIdentifier } = require("@liskhq/lisk-cryptography");
 const { PasswordLockReceiveTransaction } = require("password-lock-transaction");
 
 const getTimestamp = () => {
@@ -9,15 +10,21 @@ const getTimestamp = () => {
     return parseInt(inSeconds);
 }
 
+const networkIdentifier = getNetworkIdentifier(
+  genesisBlockDevnet.payloadHash,
+  genesisBlockDevnet.communityIdentifier
+);
+
 const param = {
     asset: {
+      recipientId: "8273455169423958419L",
       data: {
         targetTransactionId: "9097128777207547956",
         password: "Zxs*6N+w82UDdK73sr",
       }
     },
+    networkIdentifier: networkIdentifier,
     fee: PasswordLockReceiveTransaction.FEE,
-    recipientId: "8273455169423958419L",
     timestamp: getTimestamp()
 }
 
@@ -26,7 +33,7 @@ tx.sign("robust swift grocery peasant forget share enable convince deputy road k
 
 (async () => {
   try {
-    const res = await axios.post('http://localhost:4000/api/transactions', tx);
+    const res = await axios.post('http://localhost:4003/api/transactions', tx);
     console.log(res.data);
   } catch (err) {
     console.log(err.response.data);

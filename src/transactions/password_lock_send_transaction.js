@@ -1,4 +1,5 @@
 const { BaseTransaction, TransactionError, utils, constants } = require("@liskhq/lisk-transactions");
+const validator = require("@liskhq/lisk-validator");
 const BigNum = require("@liskhq/bignum");
 const Ajv = require("ajv");
 const sendSchema = require("../json_schema/send_asset_schema");
@@ -64,37 +65,34 @@ class PasswordLockSendTransaction extends BaseTransaction {
                 errors.push(new TransactionError("should match 'senderId'", this.id, ".data.senderId"));
             }
 
-            if (+this.asset.data.amount !== +utils.convertBeddowsToLSK(this.amount.toString())) {
+            if (+this.asset.data.amount !== +utils.convertBeddowsToLSK(this.asset.amount.toString())) {
                 errors.push(new TransactionError("should match 'amount'", this.id, ".data.amount"));
             }
         }
 
-        if (!utils.validateTransferAmount(this.amount.toString())) {
-            errors.push(new TransactionError("Amount must be a valid number in string format.", this.id, ".amount", this.amount.toString()));
+        if (!validator.isValidTransferAmount(this.asset.amount.toString())) {
+            errors.push(new TransactionError("Amount must be a valid number in string format.", this.id, ".asset.amount", this.asset.amount.toString()));
         }
 
-        if (+utils.convertBeddowsToLSK(this.amount.toString()) <= +trxConfig.fee.receive) {
-            errors.push(new TransactionError("Amount must be higher than the receive fee.", this.id, ".amount", this.amount.toString()));
+        if (+utils.convertBeddowsToLSK(this.asset.amount.toString()) <= +trxConfig.fee.receive) {
+            errors.push(new TransactionError("Amount must be higher than the receive fee.", this.id, ".asset.amount", this.asset.amount.toString()));
         }
 
-        if (this.recipientId) {
-            errors.push(new TransactionError("Invalid parameter", this.id, ".recipientId"));
+        if (this.asset.recipientId) {
+            errors.push(new TransactionError("Invalid parameter", this.id, ".asset.recipientId"));
         }
         
-        if (this.recipientPublicKey) {
-            errors.push(new TransactionError("Invalid parameter", this.id, ".recipientPublicKey"));
-        }
         return errors;
     }
 
     applyAsset(store) {
         const errors = [];
         const sender = store.account.get(this.senderId);
-        const balanceError = utils.verifyAmountBalance(this.id, sender, this.amount, this.fee);
+        const balanceError = utils.verifyAmountBalance(this.id, sender, this.asset.amount, this.fee);
         if (balanceError) {
             errors.push(balanceError);
         }
-        const afterBalance = new BigNum(sender.balance).sub(this.amount);
+        const afterBalance = new BigNum(sender.balance).sub(this.asset.amount);
         store.account.set(sender.address, {...sender, balance: afterBalance.toString()});
         return errors;
     }
@@ -102,9 +100,9 @@ class PasswordLockSendTransaction extends BaseTransaction {
     undoAsset(store) {
         const errors = [];
         const sender = store.account.get(this.senderId);
-        const afterBalance = new BigNum(sender.balance).add(this.amount);
+        const afterBalance = new BigNum(sender.balance).add(this.asset.amount);
         if (afterBalance.gt(constants.MAX_TRANSACTION_AMOUNT)) {
-            errors.push(new TransactionError("Invalid amount", this.id, ".amount", this.amount.toString()));
+            errors.push(new TransactionError("Invalid amount", this.id, ".asset.amount", this.asset.amount.toString()));
         }
         store.account.set(sender.address, {...sender, balance: afterBalance.toString()});
         return errors;

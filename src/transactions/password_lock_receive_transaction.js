@@ -1,5 +1,6 @@
 const { BaseTransaction, TransactionError, utils, constants } = require("@liskhq/lisk-transactions");
 const cryptography = require("@liskhq/lisk-cryptography");
+const validator = require("@liskhq/lisk-validator");
 const BigNum = require("@liskhq/bignum");
 const Ajv = require("ajv");
 const receiveSchema = require("../json_schema/receive_asset_schema");
@@ -22,7 +23,7 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
                 address: this.senderId,
             },
             {
-                address: this.recipientId,
+                address: this.asset.recipientId,
             }
         ]);
 
@@ -59,20 +60,12 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
                 errors.push(new TransactionError(err.message, this.id, `.asset${err.dataPath}`));
             });
         }
-
-        if (!this.amount.eq(0)) {
-            errors.push(new TransactionError("Amount must be zero for this transaction", this.id, ".amount", this.amount.toString(), "0"));
-        }
         
         try {
-            utils.validateAddress(this.recipientId);
+            validator.validateAddress(this.asset.recipientId);
         }
         catch (err) {
-            errors.push(new TransactionError("RecipientId must be set for this transaction", this.id, ".recipientId", this.recipientId));
-        }
-        if (this.recipientPublicKey &&
-            this.recipientId !== cryptography.getAddressFromPublicKey(this.recipientPublicKey)) {
-            errors.push(new TransactionError("RecipientId does not match recipientPublicKey.", this.id, ".recipientId"));
+            errors.push(new TransactionError("RecipientId must be set for this transaction", this.id, ".asset.recipientId", this.asset.recipientId));
         }
         return errors;
     }
@@ -103,7 +96,7 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
         }
 
         // exist recipient ?
-        const recipient = store.account.get(this.recipientId);
+        const recipient = store.account.get(this.asset.recipientId);
         if (!recipient) {
             errors.push(new TransactionError("Recipient Not Found.", this.id));
             return errors;
@@ -117,8 +110,8 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
         
         } else {
             const decipherJson = JSON.parse(decipherRet.decipherText);
-            if (decipherJson.senderId !== this.recipientId) {
-                errors.push(new TransactionError("Invalid recipientId", this.id, ".recipientId"));
+            if (decipherJson.senderId !== this.asset.recipientId) {
+                errors.push(new TransactionError("Invalid recipientId", this.id, ".asset.recipientId"));
                 return errors;
             }
 

@@ -1,5 +1,6 @@
 const axios = require('axios');
-const { configDevnet } = require("../config");
+const { configDevnet, genesisBlockDevnet } = require("../config");
+const { getNetworkIdentifier } = require("@liskhq/lisk-cryptography");
 const { PasswordLockSendTransaction } = require("password-lock-transaction");
 
 const getTimestamp = () => {
@@ -9,15 +10,21 @@ const getTimestamp = () => {
     return parseInt(inSeconds);
 }
 
+const networkIdentifier = getNetworkIdentifier(
+  genesisBlockDevnet.payloadHash,
+  genesisBlockDevnet.communityIdentifier
+);
+
 const param = {
   asset: {
+    amount: "50000000",
     data: {
       senderId: "8273455169423958419L",
       amount: 0.5
     }
   },
   fee: PasswordLockSendTransaction.FEE,
-  amount: "50000000",
+  networkIdentifier: networkIdentifier,
   timestamp: getTimestamp()
 }
 
@@ -29,7 +36,7 @@ console.log(`cipherText: ${tx.asset.cipherText}`);
 
 (async () => {
   try {
-    const res = await axios.post('http://localhost:4000/api/transactions', tx);
+    const res = await axios.post('http://localhost:4003/api/transactions', tx);
     console.log(res.data);
   } catch (err) {
     console.log(err.response.data);

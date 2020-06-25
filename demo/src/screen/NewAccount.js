@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Mnemonic } from '@liskhq/lisk-passphrase';
 import { getAddressFromPassphrase } from '@liskhq/lisk-cryptography';
+import { FiArrowRightCircle } from 'react-icons/fi';
+import '../css/NewAccount.css';
 
 class NewAccount extends React.Component {
 

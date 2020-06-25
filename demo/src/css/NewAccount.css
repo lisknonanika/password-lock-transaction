@@ -1,0 +1,89 @@
+.title {
+  font-family: 'Gilroy ExtraBold', sans-serif;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 30px 0 10px 0;
+}
+
+.note {
+  margin: 0 10px;
+  border-radius: 10px;
+  background-color: #582d31;
+  box-shadow: 0 2px 10px #999;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.note-text {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  padding: 0 10px;
+}
+
+.note-link {
+  font-size: 1.3rem;
+}
+
+.card {
+  border-radius: 10px;
+  background-color: #06153f;
+  box-shadow: 0 2px 10px #999;
+  text-align: center;
+  position: relative;
+}
+
+.card-title {
+  font-family: 'Gilroy ExtraBold', sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 20px;
+}
+
+.card-content {
+  font-size: 1.5rem;
+  padding: 0 10px;
+  text-align: center;
+}
+
+.card-icon {
+  position: absolute;
+  font-size: 1.8rem;
+  top: 5px;
+  right: 5px;
+}
+
+@media screen and (min-width:768px) {
+  .note {
+    width: 640px;
+  }
+
+  .card-area {
+    display: flex;
+  }
+
+  .card {
+    margin: 0px 10px 20px 10px;
+    height: 135px;
+    width: 640px;
+  }
+}
+
+@media screen and (max-width:767px) {
+  .note {
+    width: 80vw;
+  }
+
+  .card-area {
+    display: block;
+  }
+
+  .card {
+    width: 80vw;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+
+  .new-account-card {
+    width: 80vw;
+  }
+}

@@ -6,6 +6,6 @@
   "license": "MIT",
   "dependencies": {
     "ajv": "^6.12.2",
-    "lisk-sdk": "^2.3.8"
+    "lisk-sdk": "^3.0.2"
   }
 }

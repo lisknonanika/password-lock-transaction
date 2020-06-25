@@ -54,17 +54,10 @@ class PasswordLockCancelTransaction extends BaseTransaction {
             });
         }
 
-        if (!this.amount.eq(0)) {
-            errors.push(new TransactionError("Amount must be zero for this transaction", this.id, ".amount", this.amount.toString(), "0"));
-        }
-
-        if (this.recipientId) {
-            errors.push(new TransactionError("Invalid parameter", this.id, ".recipientId"));
+        if (this.asset.recipientId) {
+            errors.push(new TransactionError("Invalid parameter", this.id, ".asset.recipientId"));
         }
         
-        if (this.recipientPublicKey) {
-            errors.push(new TransactionError("Invalid parameter", this.id, ".recipientPublicKey"));
-        }
         return errors;
     }
 
