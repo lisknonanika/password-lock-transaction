@@ -22,23 +22,23 @@ class NewAccount extends React.Component {
 
     render() {
         return (
-            <div className="new-account-content">
-                <div className="title">- NOTE-</div>
-                <div className="note">
-                    <div className="note-text">
+            <div className="NewAccount-content">
+                <div className="NewAccount-title">- NOTE-</div>
+                <div className="NewAccount-note">
+                    <div className="NewAccount-note-text">
                         Please make a note of the address and passphrase so that you do not forget them.<br />
                         We do not manage passphrases.<br />
                         If you forget your passphrase, you will not be able to access your account.
                     </div>
                 </div>
-                <div className="title">- YOUR NEW ACCOUNT-</div>
-                <div className="card-area">
-                    <div className="card">
-                        <div className="card-title">- address -</div>
-                        <div className="card-content">{this.state.address}</div>
+                <div className="NewAccount-title">- YOUR NEW ACCOUNT-</div>
+                <div className="NewAccount-card-area">
+                    <div className="NewAccount-card">
+                        <div className="NewAccount-card-title">- address -</div>
+                        <div className="NewAccount-card-content">{this.state.address}</div>
                         <br /><br />
-                        <div className="card-title">- passphrase -</div>
-                        <div className="card-content">{this.state.passphrase}</div>
+                        <div className="NewAccount-card-title">- passphrase -</div>
+                        <div className="NewAccount-card-content">{this.state.passphrase}</div>
                     </div>
                 </div>
             </div>
