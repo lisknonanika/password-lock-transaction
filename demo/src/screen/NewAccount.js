@@ -2,9 +2,14 @@ import React from 'react';
 
 import { Mnemonic } from '@liskhq/lisk-passphrase';
 import { getAddressFromPassphrase } from '@liskhq/lisk-cryptography';
+import { MdHome } from 'react-icons/md';
 import '../css/NewAccount.css';
 
 class NewAccount extends React.Component {
+
+    moveTop = () => {
+        this.props.history.push('/');
+    }
 
     createAcount = () => {
         const passphrase = Mnemonic.generateMnemonic();
@@ -26,8 +31,7 @@ class NewAccount extends React.Component {
                 <div className="NewAccount-title">- NOTE-</div>
                 <div className="NewAccount-note">
                     <div className="NewAccount-note-text">
-                        Please make a note of the address and passphrase so that you do not forget them.<br />
-                        We do not manage passphrases.<br />
+                        Please make a note of the address and passphrase.<br />
                         If you forget your passphrase, you will not be able to access your account.
                     </div>
                 </div>
@@ -41,6 +45,7 @@ class NewAccount extends React.Component {
                         <div className="NewAccount-card-content">{this.state.passphrase}</div>
                     </div>
                 </div>
+                <button onClick={this.moveTop}><MdHome className="button-icon" />&nbsp;Move to Top</button>
             </div>
         );
     }

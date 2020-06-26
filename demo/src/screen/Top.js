@@ -1,12 +1,12 @@
 import React from 'react';
-import { FiArrowRightCircle } from 'react-icons/fi';
+import * as md from 'react-icons/md';
 import '../css/Top.css';
 
 import {PasswordLockTransactionsConfig} from 'password-lock-transaction';
 
 class Top extends React.Component {
 
-    createAccount = () => {
+    moveNewAccount = () => {
         this.props.history.push('/new-account');
     }
 
@@ -33,7 +33,7 @@ class Top extends React.Component {
                             <br /><br />
                             You need a balance of at least the amount + fee.
                         </div>
-                        <div className="Top-card-icon"><FiArrowRightCircle /></div>
+                        <div className="Top-card-icon"><md.MdCloudUpload className="button-icon" /></div>
                     </div>
                     <div className="Top-card Top-menu-card">
                         <div className="Top-card-title">- Cancel -</div>
@@ -42,7 +42,7 @@ class Top extends React.Component {
                             <br /><br />
                             You can only cancel the LSK that you sent.
                         </div>
-                        <div className="Top-card-icon"><FiArrowRightCircle /></div>
+                        <div className="Top-card-icon"><md.MdCancel className="button-icon" /></div>
                     </div>
                     <div className="Top-card Top-menu-card">
                         <div className="Top-card-title">- Receive -</div>
@@ -51,17 +51,17 @@ class Top extends React.Component {
                             <br /><br />
                             You will need the ID and PASSWORD provided by the sender.
                         </div>
-                        <div className="Top-card-icon"><FiArrowRightCircle /></div>
+                        <div className="Top-card-icon"><md.MdCloudDownload className="button-icon" /></div>
                     </div>
                 </div>
-                <div className="Top-card Top-new-account-card" onClick={this.createAccount}>
+                <div className="Top-card Top-new-account-card" onClick={this.moveNewAccount}>
                     <div className="Top-card-title">- Create Account -</div>
                     <div className="Top-card-content">
                         To use PLT, you need a Lisk account.
                         <br />
                         Are you create the new Lisk account?
                     </div>
-                    <div className="Top-card-icon"><FiArrowRightCircle /></div>
+                    <div className="Top-card-icon"><md.MdPersonAdd className="button-icon" /></div>
                 </div>
             </div>
         );
