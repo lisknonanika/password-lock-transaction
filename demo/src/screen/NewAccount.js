@@ -7,19 +7,31 @@ import '../css/NewAccount.css';
 
 class NewAccount extends React.Component {
 
-    constructor(props) {
-        super(props);
+    createAcount = () => {
         const passphrase = Mnemonic.generateMnemonic();
         const address = getAddressFromPassphrase(passphrase);
-        this.state = {
+        return  {
             passphrase: passphrase,
             address: address
         }
     }
 
+    constructor(props) {
+        super(props);
+        this.state = this.createAcount();
+    }
+
     render() {
         return (
-            <div>
+            <div className="new-account-content">
+                <div className="title">- NOTE-</div>
+                <div className="note">
+                    <div className="note-text">
+                        Please make a note of the address and passphrase so that you do not forget them.<br />
+                        We do not manage passphrases.<br />
+                        If you forget your passphrase, you will not be able to access your account.
+                    </div>
+                </div>
                 <div>passphrase:{this.state.passphrase} </div>
                 <div>address:{this.state.address}</div>
             </div>

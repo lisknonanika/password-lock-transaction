@@ -16,8 +16,8 @@ class Top extends React.Component {
                 <div className="title">- NOTE-</div>
                 <div className="note">
                     <div className="note-text">
-                        PLT is PoC built with Lisk SDK.<br></br>
-                        (PLT = Password Lock Transaction)<br></br>
+                        PLT is PoC built with Lisk SDK.<br />
+                        (PLT = Password Lock Transaction)<br />
                         The LSK obtained here can only be used in this project.
                     </div>
                     <div>
