@@ -26,50 +26,42 @@ class Top extends React.Component {
                 </div>
                 <div className="title">- MENU -</div>
                 <div className="card-area">
-                    <div className="card">
-                        <div>
-                            <div className="card-title">- Send -</div>
-                            <div className="card-content">
-                                fee: ${PasswordLockTransactionsConfig.fee.send} LSK
-                                <br /><br />
-                                You need a balance of at least the amount + fee.
-                            </div>
-                            <div className="card-icon"><FiArrowRightCircle /></div>
-                        </div>
-                    </div>
-                    <div className="card">
-                        <div>
-                            <div className="card-title">- Cancel -</div>
-                            <div className="card-content">
-                                fee: ${PasswordLockTransactionsConfig.fee.cancel} LSK
-                                <br /><br />
-                                You can only cancel the LSK that you sent.
-                            </div>
-                            <div className="card-icon"><FiArrowRightCircle /></div>
-                        </div>
-                    </div>
-                    <div className="card">
-                        <div>
-                            <div className="card-title">- Receive -</div>
-                            <div className="card-content">
-                                fee: ${PasswordLockTransactionsConfig.fee.receive} LSK
-                                <br /><br />
-                                You will need the ID and PASSWORD provided by the sender.
-                            </div>
-                            <div className="card-icon"><FiArrowRightCircle /></div>
-                        </div>
-                    </div>
-                </div>
-                <div className="card new-account-card" onClick={this.createAccount}>
-                    <div>
-                        <div className="card-title">- Create Account -</div>
+                    <div className="card menu-card">
+                        <div className="card-title">- Send -</div>
                         <div className="card-content">
-                            To use PLT, you need a Lisk account.
-                            <br />
-                            Are you create the new Lisk account?
+                            fee: ${PasswordLockTransactionsConfig.fee.send} LSK
+                            <br /><br />
+                            You need a balance of at least the amount + fee.
                         </div>
                         <div className="card-icon"><FiArrowRightCircle /></div>
                     </div>
+                    <div className="card menu-card">
+                        <div className="card-title">- Cancel -</div>
+                        <div className="card-content">
+                            fee: ${PasswordLockTransactionsConfig.fee.cancel} LSK
+                            <br /><br />
+                            You can only cancel the LSK that you sent.
+                        </div>
+                        <div className="card-icon"><FiArrowRightCircle /></div>
+                    </div>
+                    <div className="card menu-card">
+                        <div className="card-title">- Receive -</div>
+                        <div className="card-content">
+                            fee: ${PasswordLockTransactionsConfig.fee.receive} LSK
+                            <br /><br />
+                            You will need the ID and PASSWORD provided by the sender.
+                        </div>
+                        <div className="card-icon"><FiArrowRightCircle /></div>
+                    </div>
+                </div>
+                <div className="card new-account-card" onClick={this.createAccount}>
+                    <div className="card-title">- Create Account -</div>
+                    <div className="card-content">
+                        To use PLT, you need a Lisk account.
+                        <br />
+                        Are you create the new Lisk account?
+                    </div>
+                    <div className="card-icon"><FiArrowRightCircle /></div>
                 </div>
             </div>
         );

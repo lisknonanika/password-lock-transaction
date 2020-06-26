@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Mnemonic } from '@liskhq/lisk-passphrase';
 import { getAddressFromPassphrase } from '@liskhq/lisk-cryptography';
-import { FiArrowRightCircle } from 'react-icons/fi';
 import '../css/NewAccount.css';
 
 class NewAccount extends React.Component {
@@ -32,8 +31,16 @@ class NewAccount extends React.Component {
                         If you forget your passphrase, you will not be able to access your account.
                     </div>
                 </div>
-                <div>passphrase:{this.state.passphrase} </div>
-                <div>address:{this.state.address}</div>
+                <div className="title">- YOUR NEW ACCOUNT-</div>
+                <div className="card-area">
+                    <div className="card">
+                        <div className="card-title">- address -</div>
+                        <div className="card-content">{this.state.address}</div>
+                        <br /><br />
+                        <div className="card-title">- passphrase -</div>
+                        <div className="card-content">{this.state.passphrase}</div>
+                    </div>
+                </div>
             </div>
         );
     }
