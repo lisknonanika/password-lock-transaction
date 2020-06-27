@@ -19,6 +19,7 @@ class App extends React.Component {
                                 color="#4070F4"
                                 height={100}
                                 width={100}
+                                className="App-loading"
                             />
                         }>
                             <Switch>

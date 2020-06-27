@@ -1,5 +1,5 @@
 .NewAccount-content {
-  height: calc(100vh - 5rem);
+  z-index: 0;
   width: 100vw;
   display: flex;
   flex-direction: column;

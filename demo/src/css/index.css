@@ -54,3 +54,11 @@ button {
 .button-icon {
   font-size: 3rem;
 }
+
+.bottom-space {
+  margin-top: 100px !important;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}

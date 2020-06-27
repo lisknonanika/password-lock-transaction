@@ -35,14 +35,14 @@ bower_components
 .lock-wscript
 
 # production
-/build
+build/
 
 # Dependency directories
 node_modules/
 jspm_packages/
 
 #dependencies
-/.pnp
+.pnp
 .pnp.js
 
 # TypeScript v1 declaration files
