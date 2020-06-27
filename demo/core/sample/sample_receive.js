@@ -19,8 +19,8 @@ const param = {
     asset: {
       recipientId: "8273455169423958419L",
       data: {
-        targetTransactionId: "9097128777207547956",
-        password: "Zxs*6N+w82UDdK73sr",
+        targetTransactionId: "6957123909436752912",
+        password: "Eq2vR9*cDK7GBvj&jc",
       }
     },
     networkIdentifier: networkIdentifier,
@@ -29,7 +29,7 @@ const param = {
 }
 
 const tx = new PasswordLockReceiveTransaction(param);
-tx.sign("robust swift grocery peasant forget share enable convince deputy road keep cheap");
+tx.sign("wagon stock borrow episode laundry kitten salute link globe zero feed marble");
 
 (async () => {
   try {

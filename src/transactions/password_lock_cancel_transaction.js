@@ -80,14 +80,14 @@ class PasswordLockCancelTransaction extends BaseTransaction {
         }
 
         // received ?
-        const receiveTxs = store.transaction.data.filter(tx => tx.type === trxConfig.type.receive)
+        const receiveTxs = store.transaction.data.filter(tx => tx.type === trxConfig.type.receive);
         if (receiveTxs.length > 0) {
             errors.push(new TransactionError("Already received.", this.id));
             return errors;
         }
 
         // canceled ?
-        const cancelTxs = store.transaction.data.filter(tx => tx.type === trxConfig.type.cancel)
+        const cancelTxs = store.transaction.data.filter(tx => tx.type === trxConfig.type.cancel && tx.id !== this.id);
         if (cancelTxs.length > 0) {
             errors.push(new TransactionError("Already canceled.", this.id));
             return errors;

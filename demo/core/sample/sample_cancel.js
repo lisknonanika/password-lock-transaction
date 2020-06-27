@@ -19,7 +19,7 @@ const param = {
     asset: {
       amount: "0",
       data: {
-        targetTransactionId: "10392999613536451382"
+        targetTransactionId: "12922202434338319164"
       }
     },
     networkIdentifier: networkIdentifier,
