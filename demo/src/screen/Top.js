@@ -2,12 +2,15 @@ import React from 'react';
 import * as io from 'react-icons/io';
 import '../css/Top.css';
 
-import {PasswordLockTransactionsConfig} from 'password-lock-transaction';
+import { PasswordLockTransactionsConfig } from 'password-lock-transaction';
 
 class Top extends React.Component {
 
     moveNewAccount = () => {
         this.props.history.push('/new-account');
+    }
+    moveSend= () => {
+        this.props.history.push('/send');
     }
 
     render() {
@@ -25,7 +28,7 @@ class Top extends React.Component {
                 </div>
                 <div className="Top-title">- MENU -</div>
                 <div className="Top-card-area">
-                    <div className="Top-card Top-menu-card">
+                    <div className="Top-card Top-menu-card link" onClick={this.moveSend}>
                         <div className="Top-card-title">- Send -</div>
                         <div className="Top-card-content">
                             fee: ${PasswordLockTransactionsConfig.fee.send} LSK
@@ -34,7 +37,7 @@ class Top extends React.Component {
                         </div>
                         <div className="Top-card-icon"><io.IoIosSend className="button-icon" /></div>
                     </div>
-                    <div className="Top-card Top-menu-card">
+                    <div className="Top-card Top-menu-card link">
                         <div className="Top-card-title">- Receive -</div>
                         <div className="Top-card-content">
                             fee: ${PasswordLockTransactionsConfig.fee.receive} LSK
@@ -43,7 +46,7 @@ class Top extends React.Component {
                         </div>
                         <div className="Top-card-icon"><io.IoIosSend className="button-icon rotate-180" /></div>
                     </div>
-                    <div className="Top-card Top-menu-card">
+                    <div className="Top-card Top-menu-card link">
                         <div className="Top-card-title">- Cancel -</div>
                         <div className="Top-card-content">
                             fee: ${PasswordLockTransactionsConfig.fee.cancel} LSK
@@ -53,7 +56,7 @@ class Top extends React.Component {
                         <div className="Top-card-icon"><io.IoMdCloseCircleOutline className="button-icon" /></div>
                     </div>
                 </div>
-                <div className="Top-card Top-new-account-card" onClick={this.moveNewAccount}>
+                <div className="Top-card Top-new-account-card link" onClick={this.moveNewAccount}>
                     <div className="Top-card-title">- Create Account -</div>
                     <div className="Top-card-content">
                         To use PLT, you need a Lisk account.

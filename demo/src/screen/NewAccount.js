@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Mnemonic } from '@liskhq/lisk-passphrase';
 import { getAddressFromPassphrase } from '@liskhq/lisk-cryptography';
-import { MdHome } from 'react-icons/md';
+import * as io from 'react-icons/io';
 import '../css/NewAccount.css';
 
 class NewAccount extends React.Component {
@@ -45,7 +45,7 @@ class NewAccount extends React.Component {
                         <div className="NewAccount-card-content">{this.state.passphrase}</div>
                     </div>
                 </div>
-                <button onClick={this.moveTop}><MdHome className="button-icon" />&nbsp;Move to Top</button>
+                <button onClick={this.moveTop}><io.IoMdHome className="button-icon" />&nbsp;Move to Top</button>
             </div>
         );
     }
