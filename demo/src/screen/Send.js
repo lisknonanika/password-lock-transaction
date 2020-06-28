@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { APIClient } from '@liskhq/lisk-api-client';
 import * as transactions from '@liskhq/lisk-transactions';
 import { getAddressFromPassphrase } from '@liskhq/lisk-cryptography';
+import { getAccountByAddress, postTransaction } from 'password-lock-transaction-core-utils';
 import { toast } from 'react-toastify';
 import * as io from 'react-icons/io';
 import 'react-toastify/dist/ReactToastify.css';
 import '../css/Send.css';
 
-import myUtils from '../utils';
+import { getTimestamp, networkIdentifier } from 'password-lock-transaction-core-utils';
 import { PasswordLockSendTransaction } from 'password-lock-transaction';
 
 class Send extends React.Component {
@@ -21,9 +21,9 @@ class Send extends React.Component {
         this.setState({currentBalance: "0"});
         if (!this.state.address) return;
         try {
-            const ret = await this.client.accounts.get({address: this.state.address});
-            if (ret.data.length === 0) return;
-            this.setState({currentBalance: transactions.utils.convertBeddowsToLSK(ret.data[0].balance)});
+            const res = await getAccountByAddress(this.state.address);
+            if (!res) return;
+            this.setState({currentBalance: transactions.utils.convertBeddowsToLSK(res.balance)});
         } catch (err) {
             console.log(err);
         }
@@ -31,7 +31,6 @@ class Send extends React.Component {
 
     sendTransaction = async() => {
         try {
-
             const amount = this.state.amount;
             if (!amount || amount.length === 0 || amount < 0.1 || amount > 1000) {
                 toast("amount must be in the range 0.1 to 1000.");
@@ -58,14 +57,20 @@ class Send extends React.Component {
                   }
                 },
                 fee: PasswordLockSendTransaction.FEE,
-                networkIdentifier: myUtils.networkIdentifier,
-                timestamp: myUtils.getTimestamp()
+                networkIdentifier: networkIdentifier,
+                timestamp: getTimestamp()
               }
               const tx = new PasswordLockSendTransaction(param);
-            //   tx.sign(passphrase);
-              console.log(tx);
-            //   const ret = await this.client.transactions.broadcast(param);
-            //   console.log(ret)
+              tx.sign(passphrase);
+              const res = await postTransaction(tx);
+              if (!res) {
+                  toast("Sending failed.");
+                  return;
+              }
+              
+              console.log(tx.id);
+              console.log(tx.password);
+              console.log(res);
 
         } catch (err) {
             console.log(err);
@@ -90,7 +95,6 @@ class Send extends React.Component {
             passphrase: "",
             currentBalance: "0"
         }
-        this.client = new APIClient(["http://localhost:4003"]);
     }
 
     render() {

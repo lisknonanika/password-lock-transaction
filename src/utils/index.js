@@ -1,21 +1,19 @@
 const crypto = require("crypto");
+const CryptoJS = require("crypto-js");
 const conf = require("../config");
 
 const getPassword = () => {
     const pwdStrs = conf.crypto.usePasswordStrings;
-    const unit32ary = crypto.randomFillSync(new Uint32Array(conf.crypto.pwdLength));
-    return Array.from(unit32ary).map(n => pwdStrs[n % pwdStrs.length]).join('');
+    const unit8ary = crypto.randomFillSync(new Uint8Array(conf.crypto.pwdLength));
+    return Array.from(unit8ary).map(n => pwdStrs[n % pwdStrs.length]).join('');
 }
 
 const getKeys = (password) => {
-    const gen = crypto.createHash("sha256").update(password, "utf8").digest("hex");
-    const iv = gen.slice(0, conf.crypto.ivLength);
-    const salt = gen.slice(-conf.crypto.saltLength);
-    const key = crypto.scryptSync(password, salt, conf.crypto.keyLength);
-    
+    const gen = CryptoJS.enc.Hex.stringify(CryptoJS.SHA256(password));
+    const iv = CryptoJS.enc.Utf8.parse(gen.slice(0, 32));
+    const key = CryptoJS.enc.Utf8.parse(gen.slice(-32));
     return {
         "iv": iv,
-        "salt": salt,
         "key": key
     }
 }
@@ -24,13 +22,18 @@ module.exports.cipher = (json) => {
     try {
         const password = getPassword();
         const keys = getKeys(password);
-        const cipher = crypto.createCipheriv(conf.crypto.algorithm, keys.key, keys.iv);
-        const cipherText = Buffer.concat([cipher.update(JSON.stringify(json)), cipher.final()]);
+        const val = CryptoJS.enc.Utf8.parse(JSON.stringify(json));
+        const encrypted = CryptoJS.AES.encrypt(val, keys.key, {
+            iv: keys.iv,
+            mode: CryptoJS.mode.CBC, 
+            adding: CryptoJS.pad.Pkcs7
+        });
         return {
-            "cipherText": cipherText.toString("hex"),
+            "cipherText": encrypted.ciphertext.toString(),
             "password": password
         }
     } catch (err) {
+        console.log(err);
         return {"cipherText": "", "password": ""}
     }
 }
@@ -38,11 +41,14 @@ module.exports.cipher = (json) => {
 module.exports.decipher = (cipherText, password) => {
     try {
         const keys = getKeys(password);
-        const decipher = crypto.createDecipheriv(conf.crypto.algorithm, keys.key, keys.iv);
-        const decipherText = Buffer.concat([decipher.update(Buffer.from(cipherText, "hex")), decipher.final()]);
-    
+        const val = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Hex.parse(cipherText));
+        const decrypt = CryptoJS.AES.decrypt(val, keys.key, {
+            iv: keys.iv,
+            mode: CryptoJS.mode.CBC,
+            padding: CryptoJS.pad.Pkcs7
+        });
         return {
-            "decipherText": decipherText.toString("utf8")
+            "decipherText": decrypt.toString(CryptoJS.enc.Utf8)
         }
     } catch (err) {
         return {"decipherText": ""}

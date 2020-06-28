@@ -6,6 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "ajv": "^6.12.2",
+    "crypto-js": "^4.0.0",
     "lisk-sdk": "^3.0.2"
   }
 }
