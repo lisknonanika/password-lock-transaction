@@ -1,5 +1,6 @@
 import React, {Suspense} from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import Loader from 'react-loader-spinner'
 import routes from '../routes';
 import '../css/App.css';
@@ -8,6 +9,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
+                <ToastContainer className="toast" />
                 <header className="App-header">
                     <div className="App-title">PLT Demo</div>
                 </header>

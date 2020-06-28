@@ -45,7 +45,7 @@ class NewAccount extends React.Component {
                         <div className="NewAccount-card-content">{this.state.passphrase}</div>
                     </div>
                 </div>
-                <button onClick={this.moveTop}><io.IoMdHome className="button-icon" />&nbsp;Move to Top</button>
+                <button className="button" onClick={this.moveTop}><io.IoMdHome className="button-icon" />&nbsp;Move to Top</button>
             </div>
         );
     }

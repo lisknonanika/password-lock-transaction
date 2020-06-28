@@ -1,9 +1,15 @@
 import React from 'react';
 
-import { Mnemonic } from '@liskhq/lisk-passphrase';
+import { APIClient } from '@liskhq/lisk-api-client';
+import * as transactions from '@liskhq/lisk-transactions';
 import { getAddressFromPassphrase } from '@liskhq/lisk-cryptography';
+import { toast } from 'react-toastify';
 import * as io from 'react-icons/io';
+import 'react-toastify/dist/ReactToastify.css';
 import '../css/Send.css';
+
+import myUtils from '../utils';
+import { PasswordLockSendTransaction } from 'password-lock-transaction';
 
 class Send extends React.Component {
 
@@ -11,9 +17,68 @@ class Send extends React.Component {
         this.props.history.push('/');
     }
 
+    findAccount = async() => {
+        this.setState({currentBalance: "0"});
+        if (!this.state.address) return;
+        try {
+            const ret = await this.client.accounts.get({address: this.state.address});
+            if (ret.data.length === 0) return;
+            this.setState({currentBalance: transactions.utils.convertBeddowsToLSK(ret.data[0].balance)});
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    sendTransaction = async() => {
+        try {
+
+            const amount = this.state.amount;
+            if (!amount || amount.length === 0 || amount < 0.1 || amount > 1000) {
+                toast("amount must be in the range 0.1 to 1000.");
+                return;
+            }
+            const message = this.state.message;
+            if (message && message.length > 50) {
+                toast("message must be within 50 characters.");
+                return;
+            }
+            const passphrase = this.state.passphrase;
+            if (!passphrase || passphrase.length === 0) {
+                toast("passphrase required.");
+                return;
+            }
+            const address = getAddressFromPassphrase(passphrase);
+    
+            const param = {
+                asset: {
+                  amount: transactions.utils.convertLSKToBeddows(this.state.amount),
+                  data: {
+                    senderId: address,
+                    amount: +this.state.amount
+                  }
+                },
+                fee: PasswordLockSendTransaction.FEE,
+                networkIdentifier: myUtils.networkIdentifier,
+                timestamp: myUtils.getTimestamp()
+              }
+              const tx = new PasswordLockSendTransaction(param);
+            //   tx.sign(passphrase);
+              console.log(tx);
+            //   const ret = await this.client.transactions.broadcast(param);
+            //   console.log(ret)
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     changeText = (e, name) => {
-        this.state[name] = e.target.value;
-        this.setState(this.state);
+        const s = this.state;
+        let v = e.target.value;
+        if (name === "address") v = v.toUpperCase();
+        if (name === "passphrase") v = v.toLowerCase();
+        s[name] = v;
+        this.setState(s);
     }
 
     constructor(props) {
@@ -21,10 +86,11 @@ class Send extends React.Component {
         this.state = {
             address: "",
             amount: "",
-            messaeg: "",
+            message: "",
             passphrase: "",
-            currentBalancd: "0"
+            currentBalance: "0"
         }
+        this.client = new APIClient(["http://localhost:4003"]);
     }
 
     render() {
@@ -42,23 +108,24 @@ class Send extends React.Component {
                                     required />
                         </div>
                         <br /><br />
-                        <div className="Send-card-title">- messaeg -</div>
+                        <div className="Send-card-title">- message -</div>
                         <div className="Send-card-content">*optional*</div>
                         <div className="Send-card-content">
-                            <input type="text" placeholder="max:255 characters" className="Send-input"
+                            <input type="text" placeholder="max:50 characters" className="Send-input"
                                     value={this.state.message}
-                                    onChange={e => this.changeText(e, "message")} />
+                                    onChange={e => this.changeText(e, "message")}
+                                    maxLength="50" />
                         </div>
                         <br /><br />
                         <div className="Send-card-title">- your passphrase -</div>
                         <div className="Send-card-content">*required*</div>
                         <div className="Send-card-content">
-                            <input type="text" placeholder="12 words separated by spaces" className="Send-input"
+                            <input type="password" placeholder="12 words separated by spaces" className="Send-input"
                                     value={this.state.passphrase}
                                     onChange={e => this.changeText(e, "passphrase")}
                                     required />
                         </div>
-                        <button className="Send-button" onClick={this.moveTop}><io.IoIosSend className="button-icon" />&nbsp;send</button>
+                        <button className="button Send-button" onClick={this.sendTransaction}><io.IoIosSend className="button-icon" />&nbsp;send</button>
                     </div>
                 </div>
                 <div className="Send-title">- CHECK BALANCE -</div>
@@ -73,8 +140,8 @@ class Send extends React.Component {
                         </div>
                         <br /><br />
                         <div className="Send-card-title">- current balance -</div>
-                        <div className="Send-card-content">{this.state.currentBalancd} LSK</div>
-                        <button className="Send-button" onClick={this.moveTop}><io.IoIosSearch className="button-icon" />&nbsp;check</button>
+                        <div className="Send-card-content">{this.state.currentBalance} LSK</div>
+                        <button className="button Send-button" onClick={this.findAccount}><io.IoIosSearch className="button-icon" />&nbsp;check</button>
                     </div>
                 </div>
                 <div className="Send-note">
@@ -84,7 +151,7 @@ class Send extends React.Component {
                     <div className="Send-note-title">- passphrase -</div>
                     <div className="Send-note-text">robust swift grocery peasant forget share enable convince deputy road keep cheap</div>
                 </div>
-                <button onClick={this.moveTop}><io.IoMdHome className="button-icon" />&nbsp;Move to Top</button>
+                <button className="button" onClick={this.moveTop}><io.IoMdHome className="button-icon" />&nbsp;Move to Top</button>
             </div>
         );
     }

@@ -33,7 +33,17 @@ input {
   padding: 5px;
 }
 
-button {
+.toast > div {
+  color: #cf5a5a;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.link {
+  cursor: pointer;
+}
+
+.button {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -50,10 +60,6 @@ button {
   max-width: 300px;
   padding: 15px 0;
   margin: 20px 0;
-  cursor: pointer;
-}
-
-.link {
   cursor: pointer;
 }
 
