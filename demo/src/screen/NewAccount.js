@@ -11,6 +11,10 @@ class NewAccount extends React.Component {
         this.props.history.push('/');
     }
 
+    moveReceive = () => {
+        this.props.history.push(`/receive/${this.state.id}`);
+    }
+
     createAcount = () => {
         const passphrase = Mnemonic.generateMnemonic();
         const address = getAddressFromPassphrase(passphrase);
@@ -26,10 +30,20 @@ class NewAccount extends React.Component {
             ...this.createAcount(),
             id: props.match.params.id || ""
         }
-        console.log(this.state)
     }
 
     render() {
+        const BackButton = () => {
+            if (this.state.id) {
+                return (
+                    <button className="button" onClick={this.moveReceive}><io.IoIosSend className="button-icon rotate-180" />&nbsp;Move To Receive</button>
+                );
+            } else {
+                return (
+                    <button className="button" onClick={this.moveTop}><io.IoMdHome className="button-icon" />&nbsp;Move to Top</button>
+                );
+            }
+        }
         return (
             <div className="NewAccount-content">
                 <div className="NewAccount-title">- NOTE-</div>
@@ -49,7 +63,7 @@ class NewAccount extends React.Component {
                         <div className="NewAccount-card-content">{this.state.passphrase}</div>
                     </div>
                 </div>
-                <button className="button" onClick={this.moveTop}><io.IoMdHome className="button-icon" />&nbsp;Move to Top</button>
+                <BackButton />
             </div>
         );
     }

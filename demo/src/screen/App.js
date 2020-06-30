@@ -36,7 +36,7 @@ class App extends React.Component {
                                         />
                                     ))
                                 }
-                                <Route render={() => <div>Page Not Found</div>} />
+                                <Route render={() => <div className="App-page-not-found">Page Not Found</div>} />
                             </Switch>
                         </Suspense>
                     </BrowserRouter>
