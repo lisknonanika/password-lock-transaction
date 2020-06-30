@@ -46,29 +46,36 @@ class Send extends React.Component {
 
     sendTransaction = async() => {
         try {
+            // check amount
             const amount = this.state.amount;
             if (!amount || amount.length === 0 || amount < 0.1 || amount > 1000) {
-                toast("amount must be in the range 0.1 to 1000.");
-                return;
-            }
-            const message = this.state.message;
-            if (message && message.length > 50) {
-                toast("message must be within 50 characters.");
-                return;
-            }
-            const passphrase = this.state.passphrase;
-            if (!passphrase || passphrase.length === 0) {
-                toast("passphrase required.");
+                toast("AMOUNT must be in the range 0.1 to 1000.");
                 return;
             }
 
+            // check message
+            const message = this.state.message;
+            if (message && message.length > 50) {
+                toast("MESSAGE must be within 50 characters.");
+                return;
+            }
+
+            // check passphrase
+            const passphrase = this.state.passphrase;
+            if (!passphrase || passphrase.length === 0) {
+                toast("PASSPHRASE required.");
+                return;
+            }
+
+            // exec send transaction
             this.setState({status: 0});
             const param = {
                 asset: {
                     amount: transactions.utils.convertLSKToBeddows(this.state.amount),
                     data: {
                         senderId: getAddressFromPassphrase(passphrase),
-                        amount: +this.state.amount
+                        amount: +this.state.amount,
+                        message: this.state.message
                     }
                 },
                 fee: PasswordLockSendTransaction.FEE,
@@ -181,7 +188,8 @@ class Send extends React.Component {
                     <div className="Send-note margin-top-0">
                         <div className="Send-note-text">
                             Please tell this content to the other party.<br />
-                            It's a good idea to take a screenshot to make sure you don't forget.
+                            It's a good idea to take a screenshot to make sure you don't forget.<br />
+                            * This process takes about 15 seconds.
                         </div>
                         <div className="Send-note-title">- ID -</div>
                         <div className="Send-note-text">{this.state.id}</div>

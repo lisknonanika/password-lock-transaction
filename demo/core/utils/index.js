@@ -29,6 +29,18 @@ module.exports.getAccountByAddress = async(address) => {
   }
 }
 
+module.exports.getTransactionById = async(id) => {
+  try {
+    const res = await axios.get(`${apiURL}/transactions?id=${id}`);
+    if (res.data.data.length === 0) return undefined;
+    return res.data.data[0];
+  } catch (err) {
+    console.log(err);
+    if (err.response) return err.response.data;
+    return err;
+  }
+}
+
 module.exports.postTransaction = async(tx) => {
   try {
     const res = await axios.post(`${apiURL}/transactions`, tx);

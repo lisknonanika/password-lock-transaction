@@ -59,7 +59,7 @@ class NewAccount extends React.Component {
                         <div className="NewAccount-card-title">- ADDRESS -</div>
                         <div className="NewAccount-card-content">{this.state.address}</div>
                         <br /><br />
-                        <div className="NewAccount-card-title">- PASSPHRASE -</div>
+                        <div className="NewAccount-card-title margin-top-20">- PASSPHRASE -</div>
                         <div className="NewAccount-card-content">{this.state.passphrase}</div>
                     </div>
                 </div>

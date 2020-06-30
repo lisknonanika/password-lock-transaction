@@ -9,8 +9,11 @@ class Top extends React.Component {
     moveNewAccount = () => {
         this.props.history.push('/new-account');
     }
-    moveSend= () => {
+    moveSend = () => {
         this.props.history.push('/send');
+    }
+    moveReceive = () => {
+        this.props.history.push('/receive');
     }
 
     render() {
@@ -37,7 +40,7 @@ class Top extends React.Component {
                         </div>
                         <div className="Top-card-icon"><io.IoIosSend className="button-icon" /></div>
                     </div>
-                    <div className="Top-card Top-menu-card link">
+                    <div className="Top-card Top-menu-card link" onClick={this.moveReceive}>
                         <div className="Top-card-title">- Receive -</div>
                         <div className="Top-card-content">
                             fee: ${PasswordLockTransactionsConfig.fee.receive} LSK
