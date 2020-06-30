@@ -22,7 +22,11 @@ class NewAccount extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = this.createAcount();
+        this.state = {
+            ...this.createAcount(),
+            id: props.match.params.id || ""
+        }
+        console.log(this.state)
     }
 
     render() {
@@ -31,17 +35,17 @@ class NewAccount extends React.Component {
                 <div className="NewAccount-title">- NOTE-</div>
                 <div className="NewAccount-note">
                     <div className="NewAccount-note-text">
-                        Please make a note of the address and passphrase.<br />
+                        Please make a note of the ADDRESS and PASSPHRASE.<br />
                         If you forget your passphrase, you will not be able to access your account.
                     </div>
                 </div>
                 <div className="NewAccount-title">- YOUR NEW ACCOUNT-</div>
                 <div className="NewAccount-card-area">
                     <div className="NewAccount-card">
-                        <div className="NewAccount-card-title">- address -</div>
+                        <div className="NewAccount-card-title">- ADDRESS -</div>
                         <div className="NewAccount-card-content">{this.state.address}</div>
                         <br /><br />
-                        <div className="NewAccount-card-title">- passphrase -</div>
+                        <div className="NewAccount-card-title">- PASSPHRASE -</div>
                         <div className="NewAccount-card-content">{this.state.passphrase}</div>
                     </div>
                 </div>

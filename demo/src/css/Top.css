@@ -28,12 +28,12 @@
 }
 
 .Top-note-text {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   margin-bottom: 10px;
 }
 
 .Top-note-link {
-  font-size: 1.3rem;
+  font-size: 1.6rem;
 }
 
 .Top-card {
@@ -64,7 +64,7 @@
 }
 
 .Top-card-content {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   padding: 0 10px;
   text-align: center;
 }
@@ -91,7 +91,7 @@
   }
 
   .Top-menu-card {
-    min-height: 150px;
+    min-height: 170px;
   }
 
   .Top-new-account-card {

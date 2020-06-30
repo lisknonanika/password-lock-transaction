@@ -1,7 +1,7 @@
 import React, {Suspense} from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import Loader from 'react-loader-spinner'
+import Loader from 'react-loader-spinner';
 import routes from '../routes';
 import '../css/App.css';
 

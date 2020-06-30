@@ -6,6 +6,7 @@ const Send = React.lazy(() => import('./screen/Send'));
 
 const routes = [
     { path: '/', exact: true, name: 'Top', component: Top },
+    { path: '/new-account/:id', exact: true, name: 'NewAccount', component: NewAccount },
     { path: '/new-account', exact: true, name: 'NewAccount', component: NewAccount },
     { path: '/send', exact: true, name: 'Send', component: Send },
 ]

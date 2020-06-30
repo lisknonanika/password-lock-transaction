@@ -1,9 +1,9 @@
 
 const axios = require('axios');
 const { getNetworkIdentifier } = require("@liskhq/lisk-cryptography");
-const { configDevnet, genesisBlockDevnet } = require("../config");
+const { configDevnet, genesisBlockDevnet, baseURL, apiURL } = require("../config");
 
-const apiURL = "http://localhost:4003/api";
+module.exports.getBaseURL = baseURL;
 
 module.exports.getTimestamp = () => {
     let now = new Date();
@@ -24,7 +24,8 @@ module.exports.getAccountByAddress = async(address) => {
     return res.data.data[0];
   } catch (err) {
     console.log(err);
-    return undefined;
+    if (err.response) return err.response.data;
+    return err;
   }
 }
 
@@ -35,6 +36,7 @@ module.exports.postTransaction = async(tx) => {
     return res.data;
   } catch (err) {
     console.log(err);
-    return undefined;
+    if (err.response) return err.response.data;
+    return err;
   }
 }
