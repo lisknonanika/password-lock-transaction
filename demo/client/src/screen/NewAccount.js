@@ -12,7 +12,8 @@ class NewAccount extends React.Component {
     }
 
     moveReceive = () => {
-        this.props.history.push(`/receive/${this.state.id}`);
+        const targetId = this.state.id === "dummy"? "": this.state.id;
+        this.props.history.push(`/receive/${targetId}`);
     }
 
     createAcount = () => {

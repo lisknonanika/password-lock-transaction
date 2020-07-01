@@ -1,0 +1,4 @@
+{
+    "name": "plt-core",
+    "script": "./core/index.js"
+}

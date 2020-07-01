@@ -1,5 +1,5 @@
 {
-  "name": "demo",
+  "name": "password-lock-transaction-demo-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,8 +9,8 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "lisk-sdk": "^3.0.2",
-    "password-lock-transaction": "file:../src",
-    "password-lock-transaction-core-utils": "file:core/utils",
+    "password-lock-transaction": "file:../../src",
+    "password-lock-transaction-demo-server": "file:../server",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-icons": "^3.10.0",

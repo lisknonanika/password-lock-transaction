@@ -2,14 +2,13 @@ import React from 'react';
 
 import * as transactions from '@liskhq/lisk-transactions';
 import { getAddressFromPassphrase } from '@liskhq/lisk-cryptography';
-import { getAccountByAddress, postTransaction, getBaseURL } from 'password-lock-transaction-core-utils';
 import Loader from 'react-loader-spinner';
 import { toast } from 'react-toastify';
 import * as io from 'react-icons/io';
 import 'react-toastify/dist/ReactToastify.css';
 import '../css/Send.css';
 
-import { getTimestamp, networkIdentifier } from 'password-lock-transaction-core-utils';
+import { utils } from 'password-lock-transaction-demo-server';
 import { PasswordLockSendTransaction } from 'password-lock-transaction';
 
 class Send extends React.Component {
@@ -34,7 +33,7 @@ class Send extends React.Component {
         this.setState({currentBalance: "0"});
         if (!this.state.address) return;
         try {
-            const res = await getAccountByAddress(this.state.address);
+            const res = await utils.getAccountByAddress(this.state.address);
             if (!res) return;
             if (res.message) toast(res.message);
             else this.setState({currentBalance: transactions.utils.convertBeddowsToLSK(res.balance)});
@@ -79,12 +78,12 @@ class Send extends React.Component {
                     }
                 },
                 fee: PasswordLockSendTransaction.FEE,
-                networkIdentifier: networkIdentifier,
-                timestamp: getTimestamp()
+                networkIdentifier: utils.networkIdentifier,
+                timestamp: utils.getTimestamp()
             }
             const tx = new PasswordLockSendTransaction(param);
             tx.sign(passphrase);
-            const res = await postTransaction(tx);
+            const res = await utils.postTransaction(tx);
             if (!res) toast("failed.");
             else if (res.message) toast(res.message);
             else this.setState({status: 2, id: tx.id, password: tx.password});
@@ -196,7 +195,7 @@ class Send extends React.Component {
                         <div className="Send-note-title">- PASSWORD -</div>
                         <div className="Send-note-text">{this.state.password}</div>
                         <div className="Send-note-title">- RECEIVE URL -</div>
-                        <div className="Send-note-text">{getBaseURL}/receive/{this.state.id}</div>
+                        <div className="Send-note-text">{utils.getBaseURL}/receive/{this.state.id}</div>
                     </div>
                     <button className="button" onClick={this.moveTop}><io.IoMdHome className="button-icon" />&nbsp;Move to Top</button>
                 </div>

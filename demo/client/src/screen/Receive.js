@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { getTransactionById, postTransaction } from 'password-lock-transaction-core-utils';
 import Loader from 'react-loader-spinner';
 import { toast } from 'react-toastify';
 import * as io from 'react-icons/io';
 import 'react-toastify/dist/ReactToastify.css';
 import '../css/Receive.css';
 
-import { getTimestamp, networkIdentifier } from 'password-lock-transaction-core-utils';
+import { utils } from 'password-lock-transaction-demo-server';
 import { PasswordLockReceiveTransaction } from 'password-lock-transaction';
 
 class Receive extends React.Component {
@@ -27,10 +26,6 @@ class Receive extends React.Component {
 
     moveTop = () => {
         this.props.history.push('/');
-    }
-
-    moveNewAccount = () => {
-        this.props.history.push(`/new-account/${this.state.targetId || "dummy"}`);
     }
 
     ReceiveTransaction = async() => {
@@ -66,7 +61,7 @@ class Receive extends React.Component {
             this.setState({status: 0});
 
             // get transaction
-            const t = await getTransactionById(this.state.targetId);
+            const t = await utils.getTransactionById(this.state.targetId);
             if (!t) toast("ID not found.");
             else if (t.message) toast(t.message);
             if (!t || t.message) return;
@@ -82,12 +77,12 @@ class Receive extends React.Component {
                   }
                 },
                 fee: PasswordLockReceiveTransaction.FEE,
-                networkIdentifier: networkIdentifier,
-                timestamp: getTimestamp()
+                networkIdentifier: utils.networkIdentifier,
+                timestamp: utils.getTimestamp()
             }
             const tx = new PasswordLockReceiveTransaction(param);
             tx.sign(passphrase);
-            const res = await postTransaction(tx);
+            const res = await utils.postTransaction(tx);
             if (!res) toast("failed.");
             else if (res.message) toast(res.message);
             else this.setState({status: 2, id: tx.id, password: tx.password});
@@ -133,7 +128,7 @@ class Receive extends React.Component {
                             If you do not have a Lisk account, create one.
                         </div>
                         <div className="Receive-note-link">
-                            <a href="" onClick={this.moveNewAccount}>- Create Account -</a>
+                            <a href={`/new-account/${this.state.targetId || "dummy"}`}>- Create Account -</a>
                         </div>
                     </div>
                     <div className="Receive-title">- RECEIVE -</div>
