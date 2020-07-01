@@ -112,7 +112,6 @@ class Cancel extends React.Component {
                                         onChange={e => this.changeText(e, "targetId")}
                                         required />
                             </div>
-                            <br /><br />
                             <div className="Cancel-card-title margin-top-20">- YOUR PASSPHRASE -</div>
                             <div className="Cancel-card-content">*required*</div>
                             <div className="Cancel-card-content">

@@ -36,37 +36,26 @@ class Top extends React.Component {
                 <div className="Top-card-area">
                     <div className="Top-card Top-menu-card link" onClick={this.moveSend}>
                         <div className="Top-card-title">- Send -</div>
-                        <div className="Top-card-content">
-                            fee: ${PasswordLockTransactionsConfig.fee.send} LSK
-                            <br /><br />
-                            You need a balance of at least the amount + fee.
-                        </div>
+                        <div className="Top-card-content">fee: ${PasswordLockTransactionsConfig.fee.send} LSK</div>
+                        <div className="Top-card-content margin-top-20">You need a balance of at least the amount + fee.</div>
                         <div className="Top-card-icon"><io.IoIosSend className="button-icon" /></div>
                     </div>
                     <div className="Top-card Top-menu-card link" onClick={this.moveReceive}>
                         <div className="Top-card-title">- Receive -</div>
-                        <div className="Top-card-content">
-                            fee: ${PasswordLockTransactionsConfig.fee.receive} LSK
-                            <br /><br />
-                            You will need the ID and PASSWORD provided by the sender.
-                        </div>
+                        <div className="Top-card-content">fee: ${PasswordLockTransactionsConfig.fee.receive} LSK</div>
+                        <div className="Top-card-content margin-top-20">You will need the ID and PASSWORD provided by the sender.</div>
                         <div className="Top-card-icon"><io.IoIosSend className="button-icon rotate-180" /></div>
                     </div>
                     <div className="Top-card Top-menu-card link" onClick={this.moveCancel}>
                         <div className="Top-card-title">- Cancel -</div>
-                        <div className="Top-card-content">
-                            fee: ${PasswordLockTransactionsConfig.fee.cancel} LSK
-                            <br /><br />
-                            You can only cancel the LSK that you sent.
-                        </div>
+                        <div className="Top-card-content">fee: ${PasswordLockTransactionsConfig.fee.cancel} LSK</div>
+                        <div className="Top-card-content margin-top-20">You can only cancel the LSK that you sent.</div>
                         <div className="Top-card-icon"><io.IoMdCloseCircleOutline className="button-icon" /></div>
                     </div>
                 </div>
                 <div className="Top-card Top-new-account-card link" onClick={this.moveNewAccount}>
                     <div className="Top-card-title">- Create Account -</div>
-                    <div className="Top-card-content">
-                        To use PLT, you need a Lisk account.
-                    </div>
+                    <div className="Top-card-content">To use PLT, you need a Lisk account.</div>
                     <div className="Top-card-icon"><io.IoMdPersonAdd className="button-icon" /></div>
                 </div>
             </div>

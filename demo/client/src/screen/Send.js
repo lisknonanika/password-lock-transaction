@@ -134,7 +134,6 @@ class Send extends React.Component {
                                         onChange={e => this.changeText(e, "amount")}
                                         required />
                             </div>
-                            <br /><br />
                             <div className="Send-card-title margin-top-20">- MESSAGE -</div>
                             <div className="Send-card-content">*optional*</div>
                             <div className="Send-card-content">
@@ -143,7 +142,6 @@ class Send extends React.Component {
                                         onChange={e => this.changeText(e, "message")}
                                         maxLength="50" />
                             </div>
-                            <br /><br />
                             <div className="Send-card-title margin-top-20">- YOUR PASSPHRASE -</div>
                             <div className="Send-card-content">*required*</div>
                             <div className="Send-card-content">
@@ -165,8 +163,7 @@ class Send extends React.Component {
                                         onChange={e => this.changeText(e, "address")}
                                         required />
                             </div>
-                            <br /><br />
-                            <div className="Send-card-title">- current balance -</div>
+                            <div className="Send-card-title margin-top-20">- CURRENT BALANCE -</div>
                             <div className="Send-card-content">{this.state.currentBalance} LSK</div>
                             <button className="button Send-button" onClick={this.findAccount}><io.IoIosSearch className="button-icon" />&nbsp;Check</button>
                         </div>

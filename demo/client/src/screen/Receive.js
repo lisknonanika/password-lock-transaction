@@ -142,7 +142,6 @@ class Receive extends React.Component {
                                         onChange={e => this.changeText(e, "targetId")}
                                         required />
                             </div>
-                            <br /><br />
                             <div className="Receive-card-title margin-top-20">- PASSWORD -</div>
                             <div className="Receive-card-content">*required*</div>
                             <div className="Receive-card-content">
@@ -151,7 +150,6 @@ class Receive extends React.Component {
                                         onChange={e => this.changeText(e, "password")}
                                         required />
                             </div>
-                            <br /><br />
                             <div className="Receive-card-title margin-top-20">- MESSAGE -</div>
                             <div className="Receive-card-content">*optional*</div>
                             <div className="Receive-card-content">
@@ -160,7 +158,6 @@ class Receive extends React.Component {
                                         onChange={e => this.changeText(e, "message")}
                                         maxLength="50" />
                             </div>
-                            <br /><br />
                             <div className="Receive-card-title margin-top-20">- YOUR PASSPHRASE -</div>
                             <div className="Receive-card-content">*required*</div>
                             <div className="Receive-card-content">
