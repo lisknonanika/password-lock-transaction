@@ -42,7 +42,6 @@ module.exports.getTransactionById = async(id) => {
 module.exports.postTransaction = async(tx) => {
   try {
     const res = await axios.post(`${apiURL}/transactions`, tx);
-    console.log(res);
     return res.data;
   } catch (err) {
     console.log(err);
