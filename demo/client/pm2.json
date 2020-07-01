@@ -1,0 +1,10 @@
+{
+    "name": "plt-client",
+    "script": "./node_modules/react-scripts/scripts/start.js",
+
+    "env": {
+        "NODE_ENV": "local",
+        "BASE_URL": "localhost:3000",
+        "PORT": 3000
+    }
+}

@@ -1,0 +1,1 @@
+module.exports.baseURL = process.env.BASE_URL || "localhost:3000";

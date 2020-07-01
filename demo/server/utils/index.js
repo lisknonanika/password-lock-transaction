@@ -1,9 +1,7 @@
 
 const axios = require('axios');
 const { getNetworkIdentifier } = require("@liskhq/lisk-cryptography");
-const { configDevnet, genesisBlockDevnet, baseURL, apiURL } = require("../config");
-
-module.exports.getBaseURL = baseURL;
+const { configDevnet, genesisBlockDevnet, apiURL } = require("../config");
 
 module.exports.getTimestamp = () => {
     let now = new Date();

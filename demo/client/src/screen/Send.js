@@ -8,6 +8,7 @@ import * as io from 'react-icons/io';
 import 'react-toastify/dist/ReactToastify.css';
 import '../css/Send.css';
 
+import { baseURL } from '../config';
 import { utils } from 'password-lock-transaction-demo-server';
 import { PasswordLockSendTransaction } from 'password-lock-transaction';
 
@@ -195,7 +196,7 @@ class Send extends React.Component {
                         <div className="Send-note-title">- PASSWORD -</div>
                         <div className="Send-note-text">{this.state.password}</div>
                         <div className="Send-note-title">- RECEIVE URL -</div>
-                        <div className="Send-note-text">{utils.getBaseURL}/receive/{this.state.id}</div>
+                        <div className="Send-note-text">{baseURL}/receive/{this.state.id}</div>
                     </div>
                     <button className="button" onClick={this.moveTop}><io.IoMdHome className="button-icon" />&nbsp;Move to Top</button>
                 </div>

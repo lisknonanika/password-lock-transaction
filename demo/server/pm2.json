@@ -1,0 +1,4 @@
+{
+    "name": "plt-server",
+    "script": "./app.js"
+}
