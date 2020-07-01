@@ -28,7 +28,7 @@ class Receive extends React.Component {
         this.props.history.push('/');
     }
 
-    ReceiveTransaction = async() => {
+    receiveTransaction = async() => {
         try {
             // check id
             const targetId = this.state.targetId;
@@ -71,7 +71,7 @@ class Receive extends React.Component {
                 asset: {
                   recipientId: t.senderId,
                   data: {
-                    targetTransactionId: this.state.id,
+                    targetTransactionId: this.state.targetId,
                     password: this.state.password,
                     message: this.state.message
                   }
@@ -169,7 +169,7 @@ class Receive extends React.Component {
                                         onChange={e => this.changeText(e, "passphrase")}
                                         required />
                             </div>
-                            <button className="button Receive-button" onClick={this.ReceiveTransaction}><io.IoIosSend className="button-icon rotate-180" />&nbsp;Receive</button>
+                            <button className="button Receive-button" onClick={this.receiveTransaction}><io.IoIosSend className="button-icon rotate-180" />&nbsp;Receive</button>
                         </div>
                     </div>
                     <button className="button" onClick={this.moveTop}><io.IoMdHome className="button-icon" />&nbsp;Move to Top</button>
@@ -180,6 +180,9 @@ class Receive extends React.Component {
                 <div className="Receive-content">
                     <div className="Receive-title">- RESULT -</div>
                     <div className="Receive-note">
+                        <div className="Receive-note-text">
+                            * This process takes about 15 seconds.
+                        </div>
                         <div className="Receive-note-title">- ID -</div>
                         <div className="Receive-note-text">{this.state.id}</div>
                     </div>

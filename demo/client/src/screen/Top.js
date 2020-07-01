@@ -15,6 +15,9 @@ class Top extends React.Component {
     moveReceive = () => {
         this.props.history.push('/receive');
     }
+    moveCancel = () => {
+        this.props.history.push('/cancel');
+    }
 
     render() {
         return (
@@ -49,7 +52,7 @@ class Top extends React.Component {
                         </div>
                         <div className="Top-card-icon"><io.IoIosSend className="button-icon rotate-180" /></div>
                     </div>
-                    <div className="Top-card Top-menu-card link">
+                    <div className="Top-card Top-menu-card link" onClick={this.moveCancel}>
                         <div className="Top-card-title">- Cancel -</div>
                         <div className="Top-card-content">
                             fee: ${PasswordLockTransactionsConfig.fee.cancel} LSK
