@@ -34,7 +34,7 @@
 			"logFileName": "logs/devnet/lisk_db.log",
 			"host": "localhost",
 			"port": 5432,
-			"database": "lisk_dev_v3",
+			"database": "lisk_dev",
 			"user": "lisk",
 			"password": "password",
 			"min": 10,
@@ -54,7 +54,7 @@
 	"modules": {
 		"http_api": {
 			"enabled": true,
-			"httpPort": 4003,
+			"httpPort": 4000,
 			"address": "0.0.0.0",
 			"trustProxy": false,
 			"access": {
@@ -539,11 +539,11 @@
 			}
 		},
 		"network": {
-			"wsPort": 5003,
+			"wsPort": 5000,
 			"seedPeers": [
 				{
 					"ip": "127.0.0.1",
-					"wsPort": 5003
+					"wsPort": 5000
 				}
 			]
 		}

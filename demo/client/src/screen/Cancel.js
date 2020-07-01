@@ -101,7 +101,7 @@ class Cancel extends React.Component {
     } else if (this.state.status === 1) {
             return (
                 <div className="Cancel-content">
-                    <div className="Cancel-title">- Cancel -</div>
+                    <div className="Cancel-title">- CANCEL -</div>
                     <div className="Cancel-card-area">
                         <div className="Cancel-card">
                             <div className="Cancel-card-title">- ID -</div>

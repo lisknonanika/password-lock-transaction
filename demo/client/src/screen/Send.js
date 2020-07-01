@@ -152,7 +152,7 @@ class Send extends React.Component {
                                         onChange={e => this.changeText(e, "passphrase")}
                                         required />
                             </div>
-                            <button className="button Send-button" onClick={this.sendTransaction}><io.IoIosSend className="button-icon" />&nbsp;send</button>
+                            <button className="button Send-button" onClick={this.sendTransaction}><io.IoIosSend className="button-icon" />&nbsp;Send</button>
                         </div>
                     </div>
                     <div className="Send-title">- CHECK BALANCE -</div>
@@ -168,7 +168,7 @@ class Send extends React.Component {
                             <br /><br />
                             <div className="Send-card-title">- current balance -</div>
                             <div className="Send-card-content">{this.state.currentBalance} LSK</div>
-                            <button className="button Send-button" onClick={this.findAccount}><io.IoIosSearch className="button-icon" />&nbsp;check</button>
+                            <button className="button Send-button" onClick={this.findAccount}><io.IoIosSearch className="button-icon" />&nbsp;Check</button>
                         </div>
                     </div>
                     <div className="Send-note">
