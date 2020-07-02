@@ -21,6 +21,7 @@ class Send extends React.Component {
             amount: "",
             message: "",
             passphrase: "",
+            id: "",
             address: "",
             currentBalance: "0"
         }
@@ -193,7 +194,7 @@ class Send extends React.Component {
                         <div className="Send-note-title">- PASSWORD -</div>
                         <div className="Send-note-text">{this.state.password}</div>
                         <div className="Send-note-title">- RECEIVE URL -</div>
-                        <div className="Send-note-text">{baseURL}/receive/{this.state.id}</div>
+                        <div className="Send-note-text" style={{wordBreak: "break-all"}}>{baseURL}/receive/{this.state.id}</div>
                     </div>
                     <button className="button" onClick={this.moveTop}><io.IoMdHome className="button-icon" />&nbsp;Move to Top</button>
                 </div>
