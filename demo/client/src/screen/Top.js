@@ -60,14 +60,14 @@ class Top extends React.Component {
                     <div className="Top-card-icon"><io.IoMdPersonAdd className="button-icon" /></div>
                 </div>
 
-                <div className="margin-top-20" style={{fontSize: "1.5rem"}}>
-                    <div>
-                        SOURCE CODE:&nbsp;&nbsp;
+                <div className="margin-top-20" style={{fontSize: "1.3rem"}}>
+                    <div style={{"margin-top": "10px"}}>
+                        SOURCE:&nbsp;&nbsp;
                         <a href="https://github.com/lisknonanika/password-lock-transaction" target="_" title="lisknonanika" style={{"textDecoration": "none"}}>
                             <fa.FaGithub style={{fontSize: "2rem"}} />&nbsp;lisknonanika
                         </a>
                     </div>
-                    <div>
+                    <div style={{"margin-top": "10px"}}>
                         CONTACT:&nbsp;&nbsp;
                         <a href="https://twitter.com/ys_mdmg" target="_" title="ys_mdmg" style={{"textDecoration": "none"}}>
                             <fa.FaTwitter style={{fontSize: "2rem"}} />&nbsp;ys_mdmg
@@ -77,7 +77,7 @@ class Top extends React.Component {
                             <fa.FaDiscord style={{fontSize: "2rem"}} />&nbsp;mdmg
                         </a>
                     </div>
-                    <div style={{"margin-top": "5px"}}>
+                    <div style={{"margin-top": "15px"}}>
                         LISK:&nbsp;&nbsp;
                         <a href="https://explorer.lisk.io/address/5380827711560203827L" target="_" title="mdmg" style={{"textDecoration": "none"}}>
                             5380827711560203827L&nbsp;(mdmg)
