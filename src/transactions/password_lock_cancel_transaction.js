@@ -1,4 +1,5 @@
-const { BaseTransaction, TransactionError, utils } = require("@liskhq/lisk-transactions");
+const { BaseTransaction, TransactionError, utils, constants } = require("@liskhq/lisk-transactions");
+const BigNum = require("@liskhq/bignum");
 const Ajv = require("ajv");
 const cancelSchema = require("../json_schema/cancel_asset_schema");
 const trxConfig = require("../config");
@@ -92,11 +93,31 @@ class PasswordLockCancelTransaction extends BaseTransaction {
             errors.push(new TransactionError("Already canceled.", this.id));
             return errors;
         }
+
+        const sender = store.account.get(this.senderId);
+        const afterBalance = new BigNum(sender.balance).add(sendTx.asset.amount);
+        if (afterBalance.gt(constants.MAX_TRANSACTION_AMOUNT)) {
+            errors.push(new TransactionError("Invalid amount", this.id, ".asset.amount", sendTx.asset.amount.toString()));
+            return errors;
+        }
+        store.account.set(sender.address, {...sender, balance: afterBalance.toString()});
+
         return errors;
     }
 
     undoAsset(store) {
         const errors = [];
+        const sendTxs = store.transaction.data.filter(tx => tx.type === trxConfig.type.send)
+        if (sendTxs.length === 0) {
+            errors.push(new TransactionError("Target Transaction Not Found.", this.id));
+            return errors;
+        }
+        const sendTx = sendTxs[0];
+        
+        const sender = store.account.get(this.senderId);
+        const afterBalance = new BigNum(sender.balance).sub(sendTx.asset.amount);
+        if (afterBalance < 0) afterBalance = 0;
+        store.account.set(sender.address, {...sender, balance: afterBalance.toString()});
         return errors;
     }
 }

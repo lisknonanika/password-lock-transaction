@@ -6,7 +6,7 @@
     },
     "fee": {
         "send": "0.05",
-        "receive": "0.01",
+        "receive": "0.02",
         "cancel": "0.01"
     },
     "crypto": {

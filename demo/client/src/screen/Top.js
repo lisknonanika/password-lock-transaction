@@ -50,7 +50,7 @@ class Top extends React.Component {
                         <div className="Top-card-title">- Cancel -</div>
                         <div className="Top-card-content">fee: ${PasswordLockTransactionsConfig.fee.cancel} LSK</div>
                         <div className="Top-card-content margin-top-20">You can only cancel the LSK that you sent.</div>
-                        <div className="Top-card-icon"><io.IoMdCloseCircleOutline className="button-icon" /></div>
+                        <div className="Top-card-icon"><io.IoMdTrash className="button-icon" /></div>
                     </div>
                 </div>
                 <div className="Top-card Top-new-account-card link" onClick={this.moveNewAccount}>

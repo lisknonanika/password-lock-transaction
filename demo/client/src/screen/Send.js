@@ -18,10 +18,10 @@ class Send extends React.Component {
         super(props);
         this.state = {
             status: 1,
-            address: "",
             amount: "",
             message: "",
             passphrase: "",
+            address: "",
             currentBalance: "0"
         }
     }

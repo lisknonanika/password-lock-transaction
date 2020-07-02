@@ -137,7 +137,7 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
         }
         const afterBalance = new BigNum(sender.balance).add(amount);
         if (afterBalance.gt(constants.MAX_TRANSACTION_AMOUNT)) {
-            errors.push(new TransactionError("Invalid amount", this.id, ".amount", sendTx.asset.amount.toString()));
+            errors.push(new TransactionError("Invalid amount", this.id, ".asset.amount", sendTx.asset.amount.toString()));
             return errors;
         }
         store.account.set(sender.address, {...sender, balance: afterBalance.toString()});
@@ -146,6 +146,13 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
 
     undoAsset(store) {
         const errors = [];
+        const sendTxs = store.transaction.data.filter(tx => tx.type === trxConfig.type.send)
+        if (sendTxs.length === 0) {
+            errors.push(new TransactionError("Target Transaction Not Found.", this.id));
+            return errors;
+        }
+        const sendTx = sendTxs[0];
+        
         const sender = store.account.getOrDefault(this.senderId);
         const amount = new BigNum(sendTx.asset.amount).sub(utils.convertLSKToBeddows(trxConfig.fee.receive));
         if (amount < 0) amount = 0;

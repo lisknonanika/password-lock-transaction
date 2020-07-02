@@ -1,5 +1,6 @@
 import React from 'react';
 
+import * as transactions from '@liskhq/lisk-transactions';
 import Loader from 'react-loader-spinner';
 import { toast } from 'react-toastify';
 import * as io from 'react-icons/io';
@@ -17,12 +18,28 @@ class Cancel extends React.Component {
             status: 1,
             targetId: "",
             passphrase: "",
-            id: ""
+            id: "",
+            address: "",
+            currentBalance: "0"
         }
     }
 
     moveTop = () => {
         this.props.history.push('/');
+    }
+
+    findAccount = async() => {
+        this.setState({currentBalance: "0"});
+        if (!this.state.address) return;
+        try {
+            const res = await utils.getAccountByAddress(this.state.address);
+            if (!res) return;
+            if (res.message) toast(res.message);
+            else this.setState({currentBalance: transactions.utils.convertBeddowsToLSK(res.balance)});
+        } catch (err) {
+            toast("failed");
+            console.log(err);
+        }
     }
 
     cancelTransaction = async() => {
@@ -120,8 +137,30 @@ class Cancel extends React.Component {
                                         onChange={e => this.changeText(e, "passphrase")}
                                         required />
                             </div>
-                            <button className="button Cancel-button" onClick={this.cancelTransaction}><io.IoMdCloseCircleOutline />&nbsp;Cancel</button>
+                            <button className="button Cancel-button" onClick={this.cancelTransaction}><io.IoMdTrash />&nbsp;Cancel</button>
                         </div>
+                    </div>
+                    <div className="Cancel-title">- CHECK BALANCE -</div>
+                    <div className="Cancel-card-area">
+                        <div className="Cancel-card Cancel-check-balance">
+                            <div className="Cancel-card-title">- YOUR ADDRESS -</div>
+                            <div className="Cancel-card-content">
+                                <input type="text" placeholder="Enter your address" className="Cancel-input"
+                                        value={this.state.address}
+                                        onChange={e => this.changeText(e, "address")}
+                                        required />
+                            </div>
+                            <div className="Cancel-card-title margin-top-20">- CURRENT BALANCE -</div>
+                            <div className="Cancel-card-content">{this.state.currentBalance} LSK</div>
+                            <button className="button Cancel-button" onClick={this.findAccount}><io.IoIosSearch className="button-icon" />&nbsp;Check</button>
+                        </div>
+                    </div>
+                    <div className="Cancel-note margin-top-30">
+                        <div className="Cancel-note-text">If you do not have an account, try with the following account.</div>
+                        <div className="Cancel-note-title">- ADDRESS -</div>
+                        <div className="Cancel-note-text">8273455169423958419L</div>
+                        <div className="Cancel-note-title">- PASSPHRASE -</div>
+                        <div className="Cancel-note-text">robust swift grocery peasant forget share enable convince deputy road keep cheap</div>
                     </div>
                     <button className="button" onClick={this.moveTop}><io.IoMdHome className="button-icon" />&nbsp;Move to Top</button>
                 </div>
