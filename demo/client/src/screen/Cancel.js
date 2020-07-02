@@ -124,7 +124,7 @@ class Cancel extends React.Component {
                             <div className="Cancel-card-title">- ID -</div>
                             <div className="Cancel-card-content">*required*</div>
                             <div className="Cancel-card-content">
-                                <input type="text" placeholder="enter the id" className="Cancel-input"
+                                <input type="text" placeholder="Enter the id" className="Cancel-input"
                                         value={this.state.targetId}
                                         onChange={e => this.changeText(e, "targetId")}
                                         required />
