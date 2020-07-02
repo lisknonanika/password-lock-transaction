@@ -3,7 +3,7 @@ import * as io from 'react-icons/io';
 import * as fa from 'react-icons/fa';
 import '../css/Top.css';
 
-import { PasswordLockTransactionsConfig } from 'password-lock-transaction';
+import { PasswordLockTransactionsConfig } from '@lisknonanika/password-lock-transaction';
 
 class Top extends React.Component {
 

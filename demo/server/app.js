@@ -2,7 +2,7 @@ const { Application } = require("lisk-sdk");
 const { genesisBlockDevnet, configDevnet } = require("./config");
 const { PasswordLockSendTransaction,
 		PasswordLockReceiveTransaction,
-		PasswordLockCancelTransaction } = require("password-lock-transaction");
+		PasswordLockCancelTransaction } = require("@lisknonanika/password-lock-transaction");
 
 const app = new Application(genesisBlockDevnet, configDevnet);
 app.registerTransaction(PasswordLockSendTransaction);

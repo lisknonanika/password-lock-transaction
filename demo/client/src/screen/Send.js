@@ -10,7 +10,7 @@ import '../css/Send.css';
 
 import { baseURL } from '../config';
 import { utils } from 'password-lock-transaction-demo-server';
-import { PasswordLockSendTransaction } from 'password-lock-transaction';
+import { PasswordLockSendTransaction } from '@lisknonanika/password-lock-transaction';
 
 class Send extends React.Component {
 

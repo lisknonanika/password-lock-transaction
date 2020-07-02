@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../css/Receive.css';
 
 import { utils } from 'password-lock-transaction-demo-server';
-import { PasswordLockReceiveTransaction } from 'password-lock-transaction';
+import { PasswordLockReceiveTransaction } from '@lisknonanika/password-lock-transaction';
 
 class Receive extends React.Component {
 

@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../css/Cancel.css';
 
 import { utils } from 'password-lock-transaction-demo-server';
-import { PasswordLockCancelTransaction } from 'password-lock-transaction';
+import { PasswordLockCancelTransaction } from '@lisknonanika/password-lock-transaction';
 
 class Cancel extends React.Component {
 

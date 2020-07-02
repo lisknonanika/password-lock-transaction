@@ -5,8 +5,8 @@
   "author": "lisknonanika",
   "license": "MIT",
   "dependencies": {
+    "@lisknonanika/password-lock-transaction": "file:../../src",
     "axios": "^0.19.2",
-    "lisk-sdk": "^3.0.2",
-    "password-lock-transaction": "file:../../src"
+    "lisk-sdk": "^3.0.2"
   }
 }
