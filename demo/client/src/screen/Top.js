@@ -1,5 +1,6 @@
 import React from 'react';
 import * as io from 'react-icons/io';
+import * as fa from 'react-icons/fa';
 import '../css/Top.css';
 
 import { PasswordLockTransactionsConfig } from 'password-lock-transaction';
@@ -57,6 +58,31 @@ class Top extends React.Component {
                     <div className="Top-card-title">- Create Account -</div>
                     <div className="Top-card-content">To use PLT, you need a Lisk account.</div>
                     <div className="Top-card-icon"><io.IoMdPersonAdd className="button-icon" /></div>
+                </div>
+
+                <div className="margin-top-20" style={{fontSize: "1.5rem"}}>
+                    <div>
+                        SOURCE CODE:&nbsp;&nbsp;
+                        <a href="https://github.com/lisknonanika/password-lock-transaction" target="_" title="lisknonanika" style={{"textDecoration": "none"}}>
+                            <fa.FaGithub style={{fontSize: "2rem"}} />&nbsp;lisknonanika
+                        </a>
+                    </div>
+                    <div>
+                        CONTACT:&nbsp;&nbsp;
+                        <a href="https://twitter.com/ys_mdmg" target="_" title="ys_mdmg" style={{"textDecoration": "none"}}>
+                            <fa.FaTwitter style={{fontSize: "2rem"}} />&nbsp;ys_mdmg
+                        </a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="https://discord.com/invite/7EKWJ7b" target="_" title="mdmg" style={{"textDecoration": "none"}}>
+                            <fa.FaDiscord style={{fontSize: "2rem"}} />&nbsp;mdmg
+                        </a>
+                    </div>
+                    <div style={{"margin-top": "5px"}}>
+                        LISK:&nbsp;&nbsp;
+                        <a href="https://explorer.lisk.io/address/5380827711560203827L" target="_" title="mdmg" style={{"textDecoration": "none"}}>
+                            5380827711560203827L&nbsp;(mdmg)
+                        </a>
+                    </div>
                 </div>
             </div>
         );
