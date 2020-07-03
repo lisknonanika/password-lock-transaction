@@ -12,6 +12,7 @@
     "lisk-sdk": "^3.0.2",
     "password-lock-transaction-demo-server": "file:../server",
     "react": "^16.13.1",
+    "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
     "react-icons": "^3.10.0",
     "react-loader-spinner": "^3.1.14",
