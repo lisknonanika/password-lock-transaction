@@ -77,7 +77,7 @@ const param = {
 const tx = new PasswordLockCancelTransaction(param);
 ```
 
-### Transaction config
+### Change config
 
 
 ```json:transaction_config.json
