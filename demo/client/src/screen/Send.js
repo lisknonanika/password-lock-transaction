@@ -22,6 +22,8 @@ class Send extends React.Component {
             message: "",
             passphrase: "",
             id: "",
+            password: "",
+            sendParam: {},
             address: "",
             currentBalance: "0"
         }
@@ -88,7 +90,7 @@ class Send extends React.Component {
             const res = await utils.postTransaction(tx);
             if (!res) toast("failed.");
             else if (res.message) toast(res.message);
-            else this.setState({status: 2, id: tx.id, password: tx.password});
+            else this.setState({status: 2, id: tx.id, password: tx.password, sendParam: param.asset.data});
 
         } catch (err) {
             toast("failed.");
@@ -195,6 +197,12 @@ class Send extends React.Component {
                         <div className="Send-note-text">{this.state.password}</div>
                         <div className="Send-note-title">- RECEIVE URL -</div>
                         <div className="Send-note-text" style={{wordBreak: "break-all"}}>{baseURL}/receive/{this.state.id}</div>
+                        <div className="Send-note-title">- SENDER -</div>
+                        <div className="Send-note-text">{this.state.sendParam.senderId}</div>
+                        <div className="Send-note-title">- AMOUNT -</div>
+                        <div className="Send-note-text">{this.state.sendParam.amount} LSK</div>
+                        <div className="Send-note-title">- MESSAGE -</div>
+                        <div className="Send-note-text">{this.state.sendParam.message || "none message"}</div>
                     </div>
                     <button className="button" onClick={this.moveTop}><io.IoMdHome className="button-icon" />&nbsp;Move to Top</button>
                 </div>
