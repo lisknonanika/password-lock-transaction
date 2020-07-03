@@ -3,6 +3,7 @@ import React from 'react';
 import * as transactions from '@liskhq/lisk-transactions';
 import { getAddressFromPassphrase } from '@liskhq/lisk-cryptography';
 import Loader from 'react-loader-spinner';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { toast } from 'react-toastify';
 import * as io from 'react-icons/io';
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,6 +28,46 @@ class Send extends React.Component {
             address: "",
             currentBalance: "0"
         }
+    }
+
+    mailBody = () => {
+        let body = `\n`;
+        body += `\n`;
+        body += `\n`;
+        body += `*************************\n`;
+        body += `* PLT Auto Message\n`;
+        body += `*************************\n`;
+        body += `You can receive ${this.state.sendParam.amount} LSK.\n`;
+        body += `To receive the LSK, please access the URL below and enter the password that you received in the email.\n`;
+        body += `\n`;
+        body += `* URL\n`;
+        body += `${baseURL}/receive/${this.state.id}\n`;
+        body += `\n`;
+        body += `* Password\n`;
+        body += `${this.state.password}\n`;
+        if (this.state.sendParam.message) {
+            body += `\n`;
+            body += `* Message from sender\n`;
+            body += `${this.state.sendParam.message}\n`;
+        }
+        body += `\n`;
+        body += `\n`;
+        return encodeURIComponent(body);
+    }
+
+    copyInfo = () => {
+        let body = ``;
+        body += `* URL\n`;
+        body += `${baseURL}/receive/${this.state.id}\n`;
+        body += `* Password\n`;
+        body += `${this.state.password}\n`;
+        body += `* Amount\n`;
+        body += `${this.state.sendParam.amount}\n`;
+        if (this.state.sendParam.message) {
+            body += `* Message\n`;
+            body += `${this.state.sendParam.message}\n`;
+        }
+        return body;
     }
 
     moveTop = () => {
@@ -203,6 +244,13 @@ class Send extends React.Component {
                         <div className="Send-note-text">{this.state.sendParam.amount} LSK</div>
                         <div className="Send-note-title">- MESSAGE -</div>
                         <div className="Send-note-text">{this.state.sendParam.message || "none message"}</div>
+                        <div className="Send-note-text margin-top-30">
+                            <a href={"mailto:?body=" + this.mailBody()} style={{"textDecoration": "none"}}><io.IoIosMail className="button-icon" /></a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <CopyToClipboard text={this.copyInfo()} onCopy={() => toast("Copied!")}>
+                                <io.IoIosCopy className="button-icon" style={{color: "#bacdf8", fontWeight: "bold", cursor: "pointer"}} />
+                            </CopyToClipboard>
+                        </div>
                     </div>
                     <button className="button" onClick={this.moveTop}><io.IoMdHome className="button-icon" />&nbsp;Move to Top</button>
                 </div>
