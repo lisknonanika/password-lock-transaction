@@ -16,7 +16,7 @@
                 "targetTransactionId",
                 "password"
             ],
-            "additionalProperties": false,
+            "additionalProperties": true,
             "properties": {
                 "targetTransactionId": {
                     "$id": "#/properties/data/properties/targetTransactionId",

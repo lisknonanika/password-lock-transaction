@@ -2,7 +2,6 @@ const { BaseTransaction, TransactionError, utils, constants } = require("@liskhq
 const validator = require("@liskhq/lisk-validator");
 const BigNum = require("@liskhq/bignum");
 const Ajv = require("ajv");
-const receiveSchema = require("../json_schema/receive_asset_schema");
 const trxConfig = require("../config");
 const trxUtils = require("../utils");
 
@@ -52,7 +51,7 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
         const errors = [];
 
         const ajv = new Ajv();
-        const schemaValidate = ajv.compile(receiveSchema);
+        const schemaValidate = ajv.compile(trxConfig.schema.receive);
         const schemaValidateResult = schemaValidate(this.asset);
         if (!schemaValidateResult) {
             schemaValidate.errors.forEach(err => {
@@ -112,14 +111,6 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
             if (decipherJson.senderId !== this.asset.recipientId) {
                 errors.push(new TransactionError("Invalid recipientId", this.id, ".asset.recipientId"));
                 return errors;
-            }
-
-            if (trxConfig.crypto.includePlainData && sendTx.asset.data) {
-                if (decipherJson.senderId !== sendTx.asset.data.senderId ||
-                    decipherJson.amount !== sendTx.asset.data.amount) {
-                    errors.push(new TransactionError("Invalid Target Transaction", this.id));
-                    return errors;
-                }
             }
 
             if (decipherJson.senderId !== sendTx.senderId ||

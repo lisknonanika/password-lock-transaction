@@ -1,7 +1,6 @@
 const { BaseTransaction, TransactionError, utils, constants } = require("@liskhq/lisk-transactions");
 const BigNum = require("@liskhq/bignum");
 const Ajv = require("ajv");
-const cancelSchema = require("../json_schema/cancel_asset_schema");
 const trxConfig = require("../config");
 
 class PasswordLockCancelTransaction extends BaseTransaction {
@@ -47,7 +46,7 @@ class PasswordLockCancelTransaction extends BaseTransaction {
         const errors = [];
 
         const ajv = new Ajv();
-        const schemaValidate = ajv.compile(cancelSchema);
+        const schemaValidate = ajv.compile(trxConfig.schema.cancel);
         const schemaValidateResult = schemaValidate(this.asset);
         if (!schemaValidateResult) {
             schemaValidate.errors.forEach(err => {

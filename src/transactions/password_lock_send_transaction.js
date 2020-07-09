@@ -2,7 +2,6 @@ const { BaseTransaction, TransactionError, utils, constants } = require("@liskhq
 const validator = require("@liskhq/lisk-validator");
 const BigNum = require("@liskhq/bignum");
 const Ajv = require("ajv");
-const sendSchema = require("../json_schema/send_asset_schema");
 const trxConfig = require("../config");
 const trxUtils = require("../utils");
 
@@ -51,23 +50,13 @@ class PasswordLockSendTransaction extends BaseTransaction {
         const errors = [];
 
         const ajv = new Ajv();
-        if (!trxConfig.crypto.includePlainData) sendSchema.required = ["cipherText"];
-        const schemaValidate = ajv.compile(sendSchema);
+        if (!trxConfig.crypto.includePlainData) trxConfig.schema.send.required = ["cipherText"];
+        const schemaValidate = ajv.compile(trxConfig.schema.send);
         const schemaValidateResult = schemaValidate(this.asset);
         if (!schemaValidateResult) {
             schemaValidate.errors.forEach(err => {
                 errors.push(new TransactionError(err.message, this.id, `.asset${err.dataPath}`));
             });
-        }
-
-        if (trxConfig.crypto.includePlainData) {
-            if (this.senderId !== this.asset.data.senderId) {
-                errors.push(new TransactionError("should match 'senderId'", this.id, ".data.senderId"));
-            }
-
-            if (+this.asset.data.amount !== +utils.convertBeddowsToLSK(this.asset.amount.toString())) {
-                errors.push(new TransactionError("should match 'amount'", this.id, ".data.amount"));
-            }
         }
 
         if (!validator.isValidTransferAmount(this.asset.amount.toString())) {

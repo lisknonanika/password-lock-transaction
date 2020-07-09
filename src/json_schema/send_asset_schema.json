@@ -13,25 +13,9 @@
             "$id": "#/properties/data",
             "type": "object",
             "title": "The data schema",
-            "required": [
-                "senderId",
-                "amount"
-            ],
-            "additionalProperties": false,
+            "required": [],
+            "additionalProperties": true,
             "properties": {
-                "senderId": {
-                    "$id": "#/properties/data/properties/senderId",
-                    "type": "string",
-                    "title": "The senderId schema",
-                    "pattern": "^[0-9]+L$"
-                },
-                "amount": {
-                    "$id": "#/properties/data/properties/amount",
-                    "type": "number",
-                    "title": "The amount schema",
-                    "minimum": 0.1,
-                    "maximum": 1000
-                },
                 "message": {
                     "$id": "#/properties/data/properties/message",
                     "type": "string",
