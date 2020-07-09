@@ -1,4 +1,4 @@
-# password-lock-transaction
+# Password Lock Transaction Demo
 This project is PoC built with Lisk SDK
 
 [For more information](https://medium.com/@ysmdmg/i-created-password-lock-transaction-lisk-sdk-poc-f8251d369f10)
