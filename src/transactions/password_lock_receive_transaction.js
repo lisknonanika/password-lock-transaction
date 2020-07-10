@@ -143,7 +143,7 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
         const sender = store.account.getOrDefault(this.senderId);
         let amount = new BigNum(sendTx.asset.amount).sub(utils.convertLSKToBeddows(trxConfig.fee.receive));
         if (amount < 0) amount = 0;
-        let afterBalance = new BigNum(sender.balance).sub(amount < 0? 0: amount);
+        let afterBalance = new BigNum(sender.balance).sub(amount);
         if (afterBalance < 0) afterBalance = 0;
         store.account.set(sender.address, {...sender, balance: afterBalance.toString()});
         return errors;
