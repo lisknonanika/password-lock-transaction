@@ -1,6 +1,6 @@
 {
   "name": "@lisknonanika/password-lock-transaction",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Lisk custom transaction",
   "keywords": ["lisk", "cryptocurrency"],
   "main": "index.js",
