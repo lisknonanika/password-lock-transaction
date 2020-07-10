@@ -2,6 +2,7 @@ const { BaseTransaction, TransactionError, utils, constants } = require("@liskhq
 const validator = require("@liskhq/lisk-validator");
 const BigNum = require("@liskhq/bignum");
 const Ajv = require("ajv");
+const _ = require("lodash");
 const trxConfig = require("../config");
 const trxUtils = require("../utils");
 
@@ -60,9 +61,10 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
         }
         
         try {
-            validator.validateAddress(this.asset.recipientId);
-        }
-        catch (err) {
+            if (!validator.validateAddress(this.asset.recipientId)) {
+                errors.push(new TransactionError("Invalid recipientId", this.id, ".asset.recipientId", this.asset.recipientId));
+            }
+        } catch (err) {
             errors.push(new TransactionError("RecipientId must be set for this transaction", this.id, ".asset.recipientId", this.asset.recipientId));
         }
         return errors;
@@ -100,32 +102,26 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
             return errors;
         }
 
-        const senderAsset = sendTx.asset;
-        const decipherRet = trxUtils.decipher(senderAsset.cipherText, this.asset.data.password);
+        const decipherRet = trxUtils.decipher(sendTx.asset.cipherText, this.asset.data.password);
         if (!decipherRet.decipherText) {
             errors.push(new TransactionError("Invalid password", this.id, ".asset.data.password"));
             return errors;
-        
-        } else {
-            const decipherJson = JSON.parse(decipherRet.decipherText);
-            if (decipherJson.senderId !== this.asset.recipientId) {
-                errors.push(new TransactionError("Invalid recipientId", this.id, ".asset.recipientId"));
-                return errors;
-            }
+        }
 
-            if (decipherJson.senderId !== sendTx.senderId ||
-                +decipherJson.amount !== +utils.convertBeddowsToLSK(sendTx.asset.amount.toString())) {
-                errors.push(new TransactionError("Invalid Target Transaction", this.id));
+        try {
+            const decipherJson = JSON.parse(decipherRet.decipherText);
+            if (trxConfig.crypto.includePlainData && !_.isEqual(decipherJson, sendTx.asset.data)) {
+                errors.push(new TransactionError("Invalid cipherText", sendTx.id, ".asset.cipherText"));
                 return errors;
             }
+        } catch (err) {
+            errors.push(new TransactionError("Invalid cipherText", sendTx.id, ".asset.cipherText"));
+            return errors;
         }
 
         const sender = store.account.getOrDefault(this.senderId);
-        const amount = new BigNum(sendTx.asset.amount).sub(utils.convertLSKToBeddows(trxConfig.fee.receive));
-        if (amount <= 0) {
-            errors.push(new TransactionError("Amount must be higher than the receive fee.", this.id));
-            return errors;
-        }
+        let amount = new BigNum(sendTx.asset.amount).sub(utils.convertLSKToBeddows(trxConfig.fee.receive));
+        if (amount < 0) amount = 0;
         const afterBalance = new BigNum(sender.balance).add(amount);
         if (afterBalance.gt(constants.MAX_TRANSACTION_AMOUNT)) {
             errors.push(new TransactionError("Invalid amount", this.id, ".asset.amount", sendTx.asset.amount.toString()));
@@ -145,9 +141,9 @@ class PasswordLockReceiveTransaction extends BaseTransaction {
         const sendTx = sendTxs[0];
         
         const sender = store.account.getOrDefault(this.senderId);
-        const amount = new BigNum(sendTx.asset.amount).sub(utils.convertLSKToBeddows(trxConfig.fee.receive));
+        let amount = new BigNum(sendTx.asset.amount).sub(utils.convertLSKToBeddows(trxConfig.fee.receive));
         if (amount < 0) amount = 0;
-        const afterBalance = new BigNum(sender.balance).sub(amount);
+        let afterBalance = new BigNum(sender.balance).sub(amount < 0? 0: amount);
         if (afterBalance < 0) afterBalance = 0;
         store.account.set(sender.address, {...sender, balance: afterBalance.toString()});
         return errors;

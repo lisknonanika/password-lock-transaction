@@ -222,7 +222,7 @@ class Receive extends React.Component {
                         <div className="Receive-note-title">- ID -</div>
                         <div className="Receive-note-text">{this.state.id}</div>
                     </div>
-                    <button className="button margin-top-20" onClick={this.moveTop}><io.IoMdHome className="button-icon" />&nbsp;Move to Top</button>
+                    <button className="button margin-top-40" onClick={this.moveTop}><io.IoMdHome className="button-icon" />&nbsp;Move to Top</button>
                 </div>
             );
         }

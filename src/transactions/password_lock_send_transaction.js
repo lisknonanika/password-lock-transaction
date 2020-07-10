@@ -1,5 +1,4 @@
 const { BaseTransaction, TransactionError, utils, constants } = require("@liskhq/lisk-transactions");
-const validator = require("@liskhq/lisk-validator");
 const BigNum = require("@liskhq/bignum");
 const Ajv = require("ajv");
 const trxConfig = require("../config");
@@ -50,7 +49,6 @@ class PasswordLockSendTransaction extends BaseTransaction {
         const errors = [];
 
         const ajv = new Ajv();
-        if (!trxConfig.crypto.includePlainData) trxConfig.schema.send.required = ["cipherText"];
         const schemaValidate = ajv.compile(trxConfig.schema.send);
         const schemaValidateResult = schemaValidate(this.asset);
         if (!schemaValidateResult) {
@@ -59,12 +57,15 @@ class PasswordLockSendTransaction extends BaseTransaction {
             });
         }
 
-        if (!validator.isValidTransferAmount(this.asset.amount.toString())) {
-            errors.push(new TransactionError("Amount must be a valid number in string format.", this.id, ".asset.amount", this.asset.amount.toString()));
-        }
-
-        if (+utils.convertBeddowsToLSK(this.asset.amount.toString()) <= +trxConfig.fee.receive) {
-            errors.push(new TransactionError("Amount must be higher than the receive fee.", this.id, ".asset.amount", this.asset.amount.toString()));
+        try {
+            const amount = new BigNum(this.asset.amount.toString());
+            if (amount !== 0) {
+                if (+utils.convertBeddowsToLSK(this.asset.amount.toString()) <= +trxConfig.fee.receive) {
+                    errors.push(new TransactionError("Amount must be higher than the receive fee.", this.id, ".asset.amount", this.asset.amount.toString()));
+                }
+            }
+        } catch (err) {
+            errors.push(new TransactionError("Invalid amount.", this.id, ".asset.amount", this.asset.amount.toString()));
         }
 
         if (this.asset.recipientId) {

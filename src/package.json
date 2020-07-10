@@ -1,16 +1,19 @@
 {
   "name": "@lisknonanika/password-lock-transaction",
-  "version": "1.0.2",
+  "version": "1.0.3",
+  "description": "Lisk custom transaction",
+  "keywords": ["lisk", "cryptocurrency"],
   "main": "index.js",
   "author": "lisknonanika <lisknonanika@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "ajv": "^6.12.2",
     "crypto-js": "^4.0.0",
-    "lisk-sdk": "^3.0.2"
+    "lisk-sdk": "^3.0.2",
+    "lodash": "^4.17.19"
   },
-  "repository" : {
-    "type" : "git",
+  "repository": {
+    "type": "git",
     "url": "git@github.com:lisknonanika/password-lock-transaction.git",
     "directory": "src"
   }

@@ -23,11 +23,6 @@
                     "type": "string",
                     "title": "The targetTransactionId schema"
                 },
-                "message": {
-                    "$id": "#/properties/data/properties/message",
-                    "type": "string",
-                    "title": "The message schema"
-                },
                 "password": {
                     "$id": "#/properties/data/properties/password",
                     "type": "string",
